@@ -1,0 +1,184 @@
+// Mobile: No Queries
+.hero-section-eight-container {
+    background: white;
+    padding: 40px 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+
+    .questions-container {
+        margin-top: 32px;
+
+        .questions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .question {
+                background: #F8F9FE;
+                border-radius: 12px;
+
+                .header {
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 12px;
+                    text-align: left;
+
+                    font-family: "General Sans", serif;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #000330;
+
+                    transition: all 0.2s ease-in-out;
+
+                    &:hover {
+                        cursor: pointer;
+                        background: #233375;
+                        color: white;
+                    }
+
+                    .arrow {
+                        transition: all 0.2s ease-in-out;
+                        font-family: cursive;
+                        font-size: 30px;
+                        line-height: 0;
+                        margin-top: -14px;
+                        transform: rotate(180deg);
+                        margin-left: 30px;
+                    }
+
+                }
+
+                .answer {
+                    text-align: left;
+                    transition: all 0.2s ease-in-out;
+                    max-height: 0;
+                    overflow: hidden;
+                    padding: 0;
+                    color: #616274;
+                }
+
+                &.active {
+                    .header {
+                        background: #233375;
+                        color: white;
+                        border-radius: 12px 12px 0 0;
+
+                        .arrow {
+                            margin-top: 18px;
+                            transform: rotate(0deg);
+                        }
+                    }
+
+                    .answer {
+                        max-height: 300px;
+                        padding: 12px;
+                    }
+                }
+
+            }
+
+
+        }
+    }
+
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .hero-section-eight-container {
+        background: white;
+        padding: 120px 0;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+
+
+        .questions-container {
+            margin-top: 60px;
+
+            .questions {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                .question {
+                    background: #F8F9FE;
+                    border-radius: 12px;
+
+                    .header {
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 20px;
+
+                        font-family: "General Sans", serif;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 16px;
+                        color: #000330;
+
+                        transition: all 0.2s ease-in-out;
+
+                        &:hover {
+                            cursor: pointer;
+                            background: #233375;
+                            color: white;
+                        }
+
+                        .arrow {
+                            transition: all 0.2s ease-in-out;
+                            font-family: cursive;
+                            font-size: 30px;
+                            line-height: 0;
+                            margin-top: -14px;
+                            transform: rotate(180deg);
+                        }
+
+                    }
+
+                    .answer {
+                        text-align: left;
+                        transition: all 0.2s ease-in-out;
+                        max-height: 0;
+                        overflow: hidden;
+                        padding: 0;
+                    }
+
+                    &.active {
+                        .header {
+                            background: #233375;
+                            color: white;
+
+                            .arrow {
+                                margin-top: 18px;
+                                transform: rotate(0deg);
+                            }
+                        }
+
+                        .answer {
+                            max-height: 300px;
+                            padding: 24px;
+                        }
+                    }
+
+                }
+
+
+            }
+        }
+
+    }
+}

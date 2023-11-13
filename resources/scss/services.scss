@@ -1,0 +1,141 @@
+// Mobile: No Queries
+.services-page {
+
+    .services-info-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 40px;
+
+        .title {
+            margin-top: 28px;
+        }
+
+        .body {
+            margin-top: 16px;
+        }
+
+        &.platforms-section {
+            background: white;
+        }
+
+        .platforms-container {
+            margin-top: 28px;
+            margin-bottom: 12px;
+
+            .platforms {
+                .platform {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 24px;
+
+                    .platform-icon-container {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: #E6F6ED;
+                        border-radius: 50%;
+                        min-width: 60px;
+                        height: 60px;
+                        margin-right: 16px;
+                    }
+
+                    .platform-body {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        text-align: left;
+                    }
+                }
+            }
+
+
+        }
+
+        .person-photo-section {
+            margin-top: 80px;
+            margin-bottom: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+
+            .image-container {
+                position: relative;
+                margin: auto;
+
+                img.person {
+                    z-index: 99;
+                    position: relative;
+                }
+
+                img.person-background {
+                    position: absolute;
+                    z-index: 10;
+                    top: -24px;
+                    right: -48px;
+                }
+            }
+
+
+        }
+    }
+
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    .services-page {
+        .services-info-section {
+            padding: 32px 60px;
+            flex-direction: row;
+            justify-content: center;
+            gap: 60px;
+
+            &.reverse-section {
+                flex-direction: row-reverse;
+            }
+
+
+            .body-container {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                max-width: 750px;
+            }
+
+            &.platforms-section {
+                .content-wrapper {
+                    text-align: left;
+
+                    .title {
+                        font-size: 48px;
+                    }
+
+                    .body {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .platforms-container {
+                margin-bottom: 48px;
+            }
+
+            .person-photo-section {
+                .image-container {
+
+                }
+            }
+        }
+    }
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .services-page {
+        .hero-section-two-container {
+            padding-top: 40px;
+        }
+    }
+}

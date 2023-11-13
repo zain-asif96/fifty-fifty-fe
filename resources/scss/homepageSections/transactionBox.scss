@@ -1,0 +1,134 @@
+// Mobile:
+.transaction-box-container {
+    background: #ffffff;
+    box-shadow: 0px 4px 120px rgba(0, 0, 0, 0.06);
+    border-radius: 40px;
+    max-width: 1061px;
+    z-index: 99;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 32px 16px;
+
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: -32px 16px 0 16px;
+
+    .inputs {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: self-end;
+        gap: 16px;
+    }
+
+    .custom-action-btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+@media (min-width: 760px) {
+    .transaction-box-container {
+        background: #ffffff;
+        box-shadow: 0px 4px 120px rgba(0, 0, 0, 0.06);
+        border-radius: 40px;
+        max-width: 1061px;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 40px;
+
+        position: relative;
+        left: 0;
+        right: 0;
+        margin: -32px 16px 0 16px;
+
+        .inputs {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: self-end;
+            gap: 16px;
+        }
+
+        .custom-action-btn {
+            width: 100%;
+            margin-top: 8px;
+        }
+    }
+}
+
+// Small Laptop
+@media (min-width: 1024px) {
+    .transaction-box-container {
+        background: #ffffff;
+        box-shadow: 0px 4px 120px rgba(0, 0, 0, 0.06);
+        border-radius: 40px;
+        max-width: 1061px;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        padding: 40px;
+        margin: auto;
+
+        .inputs {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: self-end;
+            gap: 16px;
+        }
+
+        .custom-action-btn {
+        }
+    }
+}
+
+// Laptop and bigger
+@media (min-width: 1440px) {
+    .transaction-box-container {
+        background: #ffffff;
+        box-shadow: 0px 4px 120px rgba(0, 0, 0, 0.06);
+        border-radius: 40px;
+        max-width: 50%;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        padding: 40px 0;
+
+        //position: absolute;
+        //left: 0;
+        //right: 0;
+        margin: -300px 20px 50px auto;
+        //transform: translateY(-35%);
+
+        .inputs {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            align-items: self-end;
+            gap: 16px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding: 18px
+        }
+
+        .custom-action-btn {
+        }
+    }
+}

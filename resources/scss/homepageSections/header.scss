@@ -1,0 +1,123 @@
+// Mobile
+.desktop-navbar {
+    display: none;
+}
+
+.mobile-navbar {
+    &.fixed{
+        position: fixed;
+        background: white;
+        z-index: 999;
+        width: 100%;
+        top: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+
+        .open-icon {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        &.active {
+            max-height: 100px;
+            padding: 16px 16px;
+        }
+    }
+
+    .menu-body {
+        z-index: 999;
+        background: white;
+        position: absolute;
+        width: 100%;
+
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+
+        &.active {
+            max-height: 600px;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 20px;
+
+            .close-icon {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+
+            .menu-item {
+                padding: 16px 20px;
+                border-top: 1px solid #EEEDFD;
+            }
+        }
+
+        .action-button-wrapper {
+            border-top: 1px solid #EEEDFD;
+            padding: 16px 20px;
+        }
+    }
+}
+
+// Laptop and bigger:
+@media (min-width: 1024px) {
+    .desktop-navbar {
+        display: block !important;
+        width: 100%;
+
+        &.fixed{
+            position: fixed;
+            background: white;
+            z-index: 999;
+            top: 0;
+        }
+
+        .inside-container {
+            padding: 16px 60px;
+            max-width: 1410px;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+
+            .nav-items {
+                display: flex;
+                align-items: center;
+                gap: 40px;
+
+                .nav-item {
+                    font-family: 'General Sans', serif;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: #616274;
+                    letter-spacing: 0.5px;
+                }
+            }
+        }
+    }
+
+    .mobile-navbar {
+        display: none;
+    }
+}

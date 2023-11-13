@@ -1,0 +1,105 @@
+// Mobile: No Queries
+.hero-section-seven-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-image: url("/public/images/icons/logo/logo-background-new.svg");
+    background-repeat: no-repeat;
+    background-position: 12px 40px;
+    background-size: 95%;
+    padding: 0;
+
+    &.reverse-section {
+        flex-direction: column-reverse;
+        align-items: center;
+        background-position: 50% 95%;
+
+        .info {
+            margin-bottom: 40px;
+            margin-top: 0;
+        }
+    }
+
+    .info {
+        text-align: center;
+        max-width: 590px;
+        margin-top: 40px;
+    }
+
+    .apps-icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
+        img {
+            height: 40px;
+
+            &.google {
+                height: 39px;
+            }
+        }
+    }
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    .hero-section-seven-container {
+        background-position: 50% 3%;
+        background-size: 80%;
+
+        &.reverse-section {
+            flex-direction: row;
+            align-items: initial;
+            background-position: 50% 3%;
+
+            .info {
+                margin-bottom: 0;
+                margin-top: 40px;
+            }
+        }
+    }
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .hero-section-seven-container {
+        display: flex;
+        justify-content: space-between;
+        background-image: url("/public/images/icons/logo/logo-background-new.svg");
+        background-repeat: no-repeat;
+        background-position: 49px 75%;
+        background-size: 42%;
+        padding-top: 40px;
+        padding-left: 60px;
+        padding-right: 60px;
+
+        &.reverse-section {
+            flex-direction: row;
+            align-items: initial;
+            background-position: 49px 75%;
+
+            .info {
+                margin-bottom: 0;
+                margin-top: 80px;
+            }
+        }
+
+        .info {
+            text-align: left;
+            align-items: self-start;
+            max-width: 590px;
+            margin-top: 80px;
+        }
+
+        .apps-icons {
+            img {
+                height: 40px;
+                cursor: pointer;
+                &.google {
+                    height: 39px;
+                }
+            }
+        }
+    }
+}

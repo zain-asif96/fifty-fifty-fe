@@ -1,0 +1,287 @@
+// Mobile:
+.hero-section-one {
+    padding-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    background-image: url("/public/images/icons/logo/logo-background-new.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 95%;
+    background-size: 75%;
+
+    .hero-section-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        padding-bottom: 50px;
+    }
+
+    .hero-section-image {
+        margin-top: 40px;
+
+        img {
+            border-radius: 10px;
+        }
+    }
+
+    .ratings-container {
+        margin-top: 40px;
+        padding-top: 0;
+        border-top: 0;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        .avatars {
+            display: flex;
+            align-items: center;
+
+            .avatar {
+                margin-right: -12px;
+            }
+
+            .rating-number {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: #04a949;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: 500;
+                font-size: 16px;
+                font-family: "General Sans", serif;
+            }
+        }
+
+        .rating-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    .hero-section-one {
+        padding-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        background-image: url("/public/images/icons/logo/logo-background-new.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 106%;
+        background-size: 75%;
+
+        .hero-section-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-section-image {
+            margin-top: 40px;
+
+            img {
+                border-radius: 10px;
+            }
+        }
+
+        .ratings-container {
+            margin-top: 40px;
+            padding-top: 0;
+            border-top: 0;
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+            gap: 24px;
+
+            .avatars {
+                display: flex;
+                align-items: center;
+
+                .avatar {
+                    margin-right: -12px;
+                }
+
+                .rating-number {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    background: #04a949;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 500;
+                    font-size: 16px;
+                    font-family: "General Sans", serif;
+                }
+            }
+
+            .rating-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    }
+}
+
+// Small laptop
+@media (min-width: 1024px) {
+    .hero-section-one {
+        padding-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        background-image: url("/public/images/icons/logo/logo-background-new.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 106%;
+        background-size: 50%;
+
+        .hero-section-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-section-image {
+            margin-top: 40px;
+
+            img {
+                border-radius: 10px;
+                width: 60%;
+                margin: auto;
+            }
+        }
+
+        .ratings-container {
+            margin-top: 40px;
+            padding-top: 0;
+            border-top: 0;
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+            .avatars {
+                display: flex;
+                align-items: center;
+
+                .avatar {
+                    margin-right: -12px;
+                }
+
+                .rating-number {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    background: #04a949;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 500;
+                    font-size: 16px;
+                    font-family: "General Sans", serif;
+                }
+            }
+
+            .rating-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    }
+}
+
+// Laptop Bigger
+@media (min-width: 1440px) {
+    .hero-section-one {
+        padding-top: 90px;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+
+        background-image: url("/public/images/icons/logo/logo-background-new.svg");
+        background-repeat: no-repeat;
+        background-position: 97% 40px;
+        background-size: 52%;
+
+        .hero-section-title {
+            display: flex;
+            flex-direction: column;
+            align-items: self-start;
+            text-align: left;
+            width: 50%;
+        }
+
+        .hero-section-image {
+            margin-top: 0;
+
+            img {
+                border-radius: 10px;
+                width: 100%;
+                margin: auto;
+            }
+        }
+
+        .ratings-container {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #d9d9e0;
+
+            display: flex;
+            align-items: center;
+
+            .avatars {
+                display: flex;
+                align-items: center;
+
+                .avatar {
+                    margin-right: -12px;
+                }
+
+                .rating-number {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    background: #04a949;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 500;
+                    font-size: 16px;
+                    font-family: "General Sans", serif;
+                }
+            }
+
+            .rating-text {
+                display: flex;
+                flex-direction: column;
+                align-items: self-start;
+            }
+        }
+    }
+}

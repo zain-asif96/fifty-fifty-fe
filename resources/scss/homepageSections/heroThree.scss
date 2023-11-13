@@ -1,0 +1,39 @@
+// Mobile: No Queries
+.hero-section-three-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+    text-align: center;
+}
+
+.site-properties {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .hero-section-three-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 120px 0;
+        text-align: center;
+    }
+
+    .site-properties {
+        margin-top: 60px;
+        display: flex;
+        gap: 30px;
+    }
+}
+

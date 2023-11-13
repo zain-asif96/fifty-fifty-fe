@@ -1,0 +1,45 @@
+.privacy-page, .terms-page{
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    .inside-container {
+        padding-left: 16px;
+        padding-right: 16px;
+        max-width: 1410px;
+        margin: auto;
+    }
+
+    .main-header{
+        margin-bottom: 40px;
+    }
+
+    .second-header{
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    ul{
+        padding-left: 30px;
+        margin-bottom: 12px;
+
+        li{
+            margin-top: 12px;
+            list-style-type: circle;
+        }
+    }
+}
+
+
+
+// Tablet and bigger
+@media (min-width: 760px) {
+
+    .privacy-page, .terms-page {
+        .inside-container {
+            padding-left: 60px;
+            padding-right: 60px;
+            max-width: 1410px;
+            margin: auto;
+        }
+    }
+}

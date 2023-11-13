@@ -1,0 +1,97 @@
+// Mobile: No Queries
+.home-page,
+.services-page {
+    width: 100%;
+    background: #f8f9fe;
+    margin-top: 80px;
+
+    .inside-container {
+        padding-left: 16px;
+        padding-right: 16px;
+        max-width: 1410px;
+        margin: auto;
+    }
+
+    .limited-title-width {
+        max-width: 1000px;
+    }
+
+    .limited-title-text {
+        max-width: 1100px;
+    }
+}
+.home-page {
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    .home-page,
+    .services-page {
+        width: 100%;
+        background: #f8f9fe;
+
+        .inside-container {
+            padding-left: 60px;
+            padding-right: 60px;
+            max-width: 1410px;
+            margin: auto;
+        }
+
+        .limited-title-width {
+            max-width: 1000px;
+        }
+
+        .limited-title-text {
+            max-width: 1100px;
+        }
+    }
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .home-page,
+    .services-page {
+        width: 100%;
+        background: #f8f9fe;
+
+        .inside-container {
+            padding-left: 60px;
+            padding-right: 60px;
+            max-width: 1410px;
+            margin: auto;
+        }
+
+        .limited-title-width {
+            max-width: 1000px;
+        }
+
+        .limited-title-text {
+            max-width: 1100px;
+        }
+    }
+}
+
+@import "homepageSections/heroOne";
+@import "homepageSections/header";
+@import "homepageSections/footer";
+@import "homepageSections/fiftyText";
+@import "homepageSections/transactionBox";
+@import "homepageSections/activePosts";
+@import "homepageSections/heroTwo";
+@import "homepageSections/heroThree";
+@import "homepageSections/heroFour";
+@import "homepageSections/heroFive";
+@import "homepageSections/heroSix";
+@import "homepageSections/heroSeven";
+@import "homepageSections/heroEight";
+@import "homepageSections/heroNine";
+
+// Mobile: No Queries
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+}

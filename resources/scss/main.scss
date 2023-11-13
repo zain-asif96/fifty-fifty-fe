@@ -1,0 +1,62 @@
+@import "fonts";
+@import "homePage";
+@import "services";
+@import "PrivacyAndTerms";
+@import "Transaction";
+@import "Track";
+
+// Hide Arrows from the number input:
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+// Transition Fade:
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.text-main-dark{
+   color:  #233375;
+}
+
+// Spinner:
+.button-spinner-center {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 35px;
+
+    &.action-btn {
+        top: 6px;
+    }
+}
+
+// errors:
+.error-border {
+    border-color: #feb2b2 !important;
+}
+
+.logo-img{
+    width: 150px;
+    height: 40px;
+}
+
+.country-show{
+    opacity: 0.4;
+}

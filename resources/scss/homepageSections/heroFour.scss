@@ -1,0 +1,44 @@
+// Mobile: No Queries
+.hero-section-four-container {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+    text-align: center;
+
+    .working-steps {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+}
+
+// Tablet and bigger:
+@media (min-width: 760px) {
+    
+}
+
+// laptop and bigger:
+@media (min-width: 1024px) {
+    .hero-section-four-container {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px;
+        text-align: center;
+
+        .working-steps {
+            margin-top: 60px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+    }
+}
+

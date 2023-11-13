@@ -1,0 +1,1 @@
+import{c as n}from"./countries-4c15b513.js";const m=()=>({getURLParam:e=>new Proxy(new URLSearchParams(window.location.search),{get:(r,a)=>r.get(a)})[e],getCountryLabelByCode:e=>n.find(r=>r.value===e).label,amountHumanReadableWithCurrency:e=>(e/100).toFixed(2)});export{m as u};

@@ -1,0 +1,210 @@
+// Mobile:
+.timeline-wrapper {
+    width: 100%;
+    margin-top: 140px !important;
+    margin-bottom: 40px;
+
+    .timeline {
+        margin: 0 16px;
+        background: #f8f9fe;
+        border-radius: 20px;
+        padding: 40px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .track-steps-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            .transaction-info {
+                display: flex;
+                align-items: center;
+                margin-top: 16px;
+                margin-bottom: 28px;
+
+                span {
+                    color: #04a949;
+                    margin-left: 4px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .track-form-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+
+            .track-form-action-button {
+                width: 100%;
+                margin-top: 12px;
+            }
+        }
+    }
+
+    .transaction-stages-wrapper {
+        width: 100%;
+
+        ol {
+            text-align: left;
+
+            li {
+                margin-left: 18px;
+                margin-bottom: 40px;
+
+                .track-step-icon {
+                    background-color: #233375;
+                    position: absolute;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        .receiver-action-buttons {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 16px;
+
+            .confirmed-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+
+                background: white;
+                color: #04a949;
+                border: 1px solid #04a949;
+
+                font-family: "General Sans", serif;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                border-radius: 8px;
+                padding: 11px 46px;
+                letter-spacing: 0.3px;
+                white-space: nowrap;
+                transition: all 0.3s ease-in-out;
+
+                &:hover {
+                    background: #04a949;
+                    color: white;
+                }
+
+                .icon {
+                    color: white;
+                    background: #04a949;
+                    border-radius: 50%;
+                    margin-right: 12px;
+                    padding: 2px;
+                }
+            }
+        }
+    }
+
+    .receiver-item-wrapper {
+        width: 100%;
+        padding: 16px;
+        background: #ffffff;
+        border-radius: 16px;
+        margin-top: 24px;
+        margin-bottom: 24px;
+
+        .receiver-item {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 5px;
+
+            .title {
+                text-align: center;
+                border-bottom: 1px solid lightgray;
+                padding-bottom: 8px;
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    .proof-wrapper {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 24px;
+
+        .action-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+    }
+}
+
+// Tablet:
+@media (min-width: 760px) {
+    .timeline-wrapper {
+        .timeline {
+            padding: 40px;
+        }
+
+        .transaction-stages-wrapper {
+            .receiver-action-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .receiver-item-wrapper {
+            padding: 18px 36px;
+        }
+
+        .proof-wrapper {
+            flex-wrap: nowrap;
+        }
+    }
+}
+
+// Laptop and bigger:
+@media (min-width: 1024px) {
+    .timeline-wrapper {
+        max-width: 1070px;
+        margin: 60px auto;
+
+        .timeline {
+            padding: 40px 100px;
+        }
+
+        .transaction-stages-wrapper {
+            .receiver-action-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .receiver-item-wrapper {
+            padding: 18px 36px;
+
+            .receiver-item {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 2%;
+
+                div {
+                    width: 48%;
+                }
+
+                .title {
+                    width: 100%;
+                    padding-bottom: 8px;
+                    margin-bottom: 16px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+["label" => "", "code" => "", "can_send" => "", "can_receive" => "", "continent" => "", "tel_code" => "", "area" => "", "population" => "", "currency_id" => Currency::where("code", "")->first()?->id],
