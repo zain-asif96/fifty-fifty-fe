@@ -2,14 +2,23 @@
 import { ref, reactive, computed } from "vue";
 import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
+import Spinner from "@/Components/Custom/Spinner.vue";
 import Modal from "@/Components/Custom/Modal.vue";
+import SelectInput from "@/Components/Custom/SelectInput.vue";
+import { countries } from "@/helpers/countries";
+import { postStatus } from "@/helpers/postStatus";
 import TextInput from "@/Components/TextInput.vue";
+import { request, BASE_URL } from "@/helpers/requestHelper.js";
+import { userUserStore } from "@/stores/user";
 
 const notification = useNotificationStore();
 const api = useAPI();
+const $userStore = userUserStore();
+
+
 // Props:
 const props = defineProps({
-    timeData: {
+    postData: {
         type: Object,
         required: true
     },
@@ -18,67 +27,74 @@ const props = defineProps({
         default: false
     },
 })
-const time = reactive({
-    // 'model_name': 'App\\Models\\Post',
-    'time': props.timeData.time,
+console.log('post', props.postData);
+const post = reactive({
+    'receiver_amount': props.postData.value.receiver_amount,
+    'status': props.postData.value.status,
 })
 const isModalOpened = ref(props.show);
-// const closeModal = () => {
-//     isModalOpened.value = false;
+// console.log('modal here', isModalOpened.value);
+// // const closeModal = () => {
+// //     isModalOpened.value = false;
+// // }
+// const openModal = () => {
+//     console.log('inside openModal ');
+//     if (props.show) return;
+//     isModalOpened.value = true;
 // }
-const openModal = () => {
-    console.log('inside openModal ');
-    if (props.show) return;
-    isModalOpened.value = true;
-}
 
 
 // Emits
 const emit = defineEmits(['close'])
 
 function close(isFetchData) {
-    console.log('this s iedit', isFetchData)
-        ;
+    console.log('this s iedit', isFetchData);
     emit("close", isFetchData);
 }
-const applyEdit = async () => {
-    api.startRequest();
-    console.log('timeData', props.timeData.value.id, time);
-    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    // // Set the CSRF token as a default header for all Axios requests
-    // axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    // console.log('csrfToken', csrfToken);
-    try {
-        // const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
-        const res = await axios.put('/admin/update-status-time/' + props.timeData.value.id, time)
 
+const applyEdit = async () => {
+    let token = $userStore.getUserApp
+        ? $userStore.getUserApp?.data?.auth_token
+        : "";
+    api.startRequest();
+    console.log('postdata here', post);
+    try {
+        const res = await axios.put(`${BASE_URL}/posts/` + props.postData.value.id, post, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        console.log('res', res);
         if (res.data) {
-            notification.notify('Time updated', 'success');
-            // endEdit();
-            close(time);
+            notification.notify('Post updated', 'success');
+            close(res.data.data);
         }
     } catch (errors) {
         console.log('errors', errors);
-        // notification.notify('Error', 'error');
-        // api.handleErrors(errors)
+        notification.notify('Error', 'error');
+        api.handleErrors(errors)
     } finally {
-        // api.requestCompleted();
+        api.requestCompleted();
     }
+
+
 }
 
-const endEdit = () => {
-    api.errors.value = {};
-    timeData.value = {};
-}
+// const endEdit = () => {
+//     api.errors.value = {};
+//     postData.value = {};
+// }
 </script>
 
 <template>
     <div>
-        <Modal :close="close" :isOpen="isModalOpened" header="Edit Time">
+        <Modal :close="close" :isOpen="isModalOpened" header="Edit Post">
             <template #content>
                 <form class="  p-2 mb-2" @submit.prevent="submit">
                     <div class="flex flex-wrap gap-2 mb-3 justify-content-center">
-                        <TextInput v-model="time.time" label="Time (min)" placeholder="Time (min)" required title="code" />
+                        <SelectInput v-model="post.status" :errors="api.errors.value?.status" :options="postStatus"
+                            label="Status" required placeholder=" Select " title="Status" type="text" />
+                        <TextInput v-model="post.receiver_amount" :errors="api.errors.value?.receiver_amount" label="Amount"
+                            placeholder="Amount" required title="amount" class="fifty-form-input" type="number" />
+
                     </div>
 
                     <div class="flex gap-4 items-center">

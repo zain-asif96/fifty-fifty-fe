@@ -1,22 +1,27 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Pagination from "@/Components/Custom/Pagination.vue";
-import { Head } from '@inertiajs/vue3';
-import TextInput from "@/Components/TextInput.vue";
-import { ref, onMounted } from "vue";
-
+import { Head, Link } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3'
 import { useSortingStore } from "@/stores/sorting";
+import { reactive, ref, onMounted } from "vue";
+import TextInput from "@/Components/TextInput.vue";
+import { request, BASE_URL } from "@/helpers/requestHelper.js";
 
 const props = defineProps({
-    admins: {
+    receivers: {
         required: true,
         type: Object
     }
 })
+
 // sorting
 var currentPage = ref(1)
+
+
+
 var searchValue = ref('');
+const allReceiver = ref({})
 var disableClick = ref(false)
 const store = useSortingStore();
 const sort = (column) => {
@@ -32,39 +37,122 @@ const sort = (column) => {
 const search = () => {
     router.visit(`?page=${currentPage.value}&q=${searchValue.value}&column=${store.column}&type=${store.type}`);
 }
+
 const clearSearch = () => {
     router.visit(`?q=`);
 }
-
 onMounted(() => {
-    searchValue.value = new URLSearchParams(window.location.search).get('q');
+    const q = new URLSearchParams(window.location.search).get('q');
     let cpg = new URLSearchParams(window.location.search).get('page');
     currentPage.value = cpg != null ? cpg : 1
+
+    if (!q) {
+        getAllReceiver(currentPage.value)
+
+    }
+    if (q) {
+        getReceiver(q)
+
+        searchValue.value = q;
+    }
 });
+
+const getReceiver = async (search = '') => {
+    let query = ''
+    if (search) {
+        query = `query=${search}`
+    }
+
+    try {
+        let res = await request({ type: 'get', url: 'receivers/search', query })
+        console.log({ res });
+        if (res?.data?.data) {
+            let data = res?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => a[col].localeCompare(b[col]));
+
+                } else {
+                    data = data?.sort((a, b) => b[col].localeCompare(a[col]));
+
+                }
+            }
+            allReceiver.value = { ...allReceiver.value, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
+
+
+const getAllReceiver = async (page = '1', limit = '10') => {
+    let query = ''
+    if (page) {
+        query = `page=${page}`
+    }
+    if (limit) {
+        query += `&limit=${limit}`
+
+    }
+    try {
+        let res = await request({ type: 'get', url: `receivers/getAll`, query })
+        console.log({ res });
+        if (res?.data?.data) {
+            let data = res?.data?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => a[col].localeCompare(b[col]));
+
+                } else {
+                    data = data?.sort((a, b) => b[col].localeCompare(a[col]));
+
+                }
+            }
+            console.log({ dataaaa: data });
+            allReceiver.value = { ...res?.data?.data, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
 </script>
 
 <template>
-    <Head title="Admins">
+    <Head title="Receivers">
         <title>
-            Admins
+            Receivers
         </title>
     </Head>
+
     <AdminLayout>
         <div class="ml-4 md:ml-16">
             <div class="mt-16 mb-8 text-xl flex items-center justify-between">
                 <div>
-                    Admins
+                    Receivers
                 </div>
-                <div class="text-sm">
-                    Page: {{ props.admins.current_page }}
-                    | total: {{ props.admins.total }}
-                    | from: {{ props.admins.from }},
-                    to: {{ props.admins.to }}
+                <div class="text-sm" v-if="allReceiver.page">
+                    Page: {{ allReceiver.page }}
+                    | total: {{ allReceiver.total }}
+                    | from: {{ allReceiver.from }},
+                    to: {{ allReceiver.to }}
                 </div>
             </div>
-
             <div class="flex items-end gap-3 ">
-                <TextInput v-model="searchValue" class="mb-8" label="Search by" placeholder="Search" title="searchValue"
+                <TextInput v-model="searchValue" class="mb-8" label="Search" placeholder="Search" title="searchValue"
                     v-on:keyup.enter="search" />
 
                 <button @click="search" type="button"
@@ -77,6 +165,7 @@ onMounted(() => {
                     Clear
                 </button>
             </div>
+
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -88,11 +177,13 @@ onMounted(() => {
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 @click="sort('email')">
-                                Email <span class="fw-100">{{ store.column == 'email' ? '(' + store.type + ')' : '' }}</span>
+                                Email <span class="fw-100">{{ store.column == 'email' ? '(' + store.type + ')' : ''
+                                }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 @click="sort('phone')">
-                                Phone <span class="fw-100">{{ store.column == 'phone' ? '(' + store.type + ')' : '' }}</span>
+                                Phone <span class="fw-100">{{ store.column == 'phone' ? '(' + store.type + ')' : ''
+                                }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 @click="sort('country')">
@@ -100,43 +191,38 @@ onMounted(() => {
                                 }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
-                                @click="sort('ip_address')">
-                                IP Address <span class="fw-100">{{ store.column == 'ip_address' ? '(' + store.type + ')' : ''
-                                }}</span>
-                            </th>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col">
-                                <!--                                @click="sort('role')"-->
-                                Role <span class="fw-100">{{ store.column == 'role' ? '(' + store.type + ')' : '' }}</span>
+                                @click="sort('label')">
+                                Bank <span class="fw-100">{{ store.column == 'label' ? '(' + store.type + ')' : '' }}</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="admin in props.admins.data" :key="admin.id"
+                        <tr v-for="receiver in allReceiver?.data" :key="receiver.id"
                             class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
-                                {{ admin.first_name }} {{ admin.last_name }}
+                                <Link :href="route('single.receiver.page', receiver.id)"
+                                    class="text-blue-700 hover:text-blue-900 hover:underline">
+                                {{ receiver.firstname }} {{ receiver.lastname }}
+                                </Link>
                             </th>
                             <td class="px-6 py-4">
-                                {{ admin.email }}
+                                {{ receiver.email }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.phone }}
+                                {{ receiver.phone }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.country }}
+                                {{ receiver.country_code }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.ip_address }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ admin.role }}
+                                {{ receiver.branch }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <Pagination :links="props.admins.links" />
+            <!-- <Pagination :links="props.receivers.links" /> -->
         </div>
 
     </AdminLayout>
@@ -145,10 +231,14 @@ onMounted(() => {
 <script>
 
 export default {
-    name: 'Admins'
+    name: 'Receivers'
 }
 </script>
 <style scoped>
+th:not(:last-child) {
+    cursor: pointer;
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -162,4 +252,5 @@ export default {
 
 th span {
     font-size: 9px;
-}</style>
+}
+</style>

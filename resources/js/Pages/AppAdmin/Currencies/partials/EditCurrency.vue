@@ -1,28 +1,28 @@
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive } from "vue";
 import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
-import Modal from "@/Components/Custom/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
+// import SelectInput from "@/Components/Custom/SelectInput.vue";
+import Spinner from "@/Components/Custom/Spinner.vue";
+import Modal from "@/Components/Custom/Modal.vue";
 
 const notification = useNotificationStore();
 const api = useAPI();
+
 // Props:
 const props = defineProps({
-    timeData: {
+    currencyData: {
         type: Object,
         required: true
     },
     show: {
         type: Boolean,
         default: false
-    },
-})
-const time = reactive({
-    // 'model_name': 'App\\Models\\Post',
-    'time': props.timeData.time,
+    }
 })
 const isModalOpened = ref(props.show);
+console.log('modal here', isModalOpened.value);
 // const closeModal = () => {
 //     isModalOpened.value = false;
 // }
@@ -37,25 +37,24 @@ const openModal = () => {
 const emit = defineEmits(['close'])
 
 function close(isFetchData) {
-    console.log('this s iedit', isFetchData)
-        ;
+    console.log('this s iedit', isFetchData);
     emit("close", isFetchData);
 }
 const applyEdit = async () => {
     api.startRequest();
-    console.log('timeData', props.timeData.value.id, time);
-    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    // // Set the CSRF token as a default header for all Axios requests
-    // axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    // console.log('csrfToken', csrfToken);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    // Set the CSRF token as a default header for all Axios requests
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
     try {
-        // const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
-        const res = await axios.put('/admin/update-status-time/' + props.timeData.value.id, time)
-
+        const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
         if (res.data) {
-            notification.notify('Time updated', 'success');
-            // endEdit();
-            close(time);
+            console.log('res', res);
+            let data = props.currencyData.value
+            console.log('data', data);
+
+            notification.notify('Currency updated', 'success');
+            endEdit();
+            close(props.currencyData.value);
         }
     } catch (errors) {
         console.log('errors', errors);
@@ -68,17 +67,36 @@ const applyEdit = async () => {
 
 const endEdit = () => {
     api.errors.value = {};
-    timeData.value = {};
+    // currencyData.value = {};
 }
 </script>
 
 <template>
     <div>
-        <Modal :close="close" :isOpen="isModalOpened" header="Edit Time">
+        <Modal :close="close" :isOpen="isModalOpened" header="Edit Currency">
             <template #content>
                 <form class="  p-2 mb-2" @submit.prevent="submit">
                     <div class="flex flex-wrap gap-2 mb-3 justify-content-center">
-                        <TextInput v-model="time.time" label="Time (min)" placeholder="Time (min)" required title="code" />
+                        <!-- <input type="number" class="w-20 text-black" v-model=""> -->
+                        <TextInput v-model="currencyData.value.code" label="Currency Code" placeholder="Currency Code"
+                            required title="code" />
+                        <TextInput v-model="currencyData.value.name" label="Currency Name" placeholder="Currency Name"
+                            required title="name" />
+
+                        <TextInput v-model="currencyData.value.rate" label="Currency Rate" placeholder="Currency Rate"
+                            required title="code" />
+
+                        <TextInput v-model="currencyData.value.special_rate" label="Special Rate" placeholder="Special Rate"
+                            required title="special_rate" />
+                        <div>
+                            <label for="">Rate Source</label>
+                            <select name="rate_source" class="w-full md:w-96 flex flex-col justify-start relative"
+                                id="rate_source" v-model="currencyData.value.rate_source">
+                                <option value="world_bank">World Bank</option>
+                                <option value="special">Special Rate</option>
+                            </select>
+                        </div>
+
                     </div>
 
                     <div class="flex gap-4 items-center">
@@ -91,7 +109,7 @@ const endEdit = () => {
                             Cancel
                         </button>
 
-                        <!-- <Spinner v-if="api.isLoading.value" class="button-spinner-center action-btn" /> -->
+                        <Spinner v-if="api.isLoading.value" class="button-spinner-center action-btn" />
                     </div>
 
                 </form>
@@ -113,43 +131,5 @@ select#rate_source {
 
 .flex.flex-wrap.gap-2.mb-3.justify-content-center {
     justify-content: center;
-}
-
-.slider {
-    /* -webkit-appearance: none; */
-    width: 40px;
-    height: 20px;
-    border-radius: 20px;
-    background: #c6c6c6;
-    outline: none;
-    opacity: 0.7;
-    transition: .2s;
-    margin: 0 10px;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-}
-
-.slider-checked {
-    background-color: #1C64F2;
 }
 </style>

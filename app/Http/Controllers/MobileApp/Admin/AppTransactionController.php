@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PaymentIntent;
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class TransactionController extends Controller
+class AppTransactionController extends Controller
 {
 
     public function transactionsPage(Request $request): Response
@@ -81,17 +81,19 @@ class TransactionController extends Controller
 
 
         $transactions = $query->paginate(10);
-        return Inertia::render('Admin/Transactions/Index', [
-            'transactions' => $transactions,
-        ]);
+        // return Inertia::render('AppAdmin/Transactions/Index', [
+        //     'transactions' => $transactions,
+        // ]);
+        return Inertia::render('AppAdmin/Transactions/Index');
     }
 
     public function paymentIntentPage(Request $request, PaymentIntent $paymentIntent): Response
     {
         $paymentIntent->load('transaction');
 
-        return Inertia::render('Admin/Transactions/SinglePaymentIntent', [
-            'paymentIntent' => $paymentIntent,
-        ]);
+        // return Inertia::render('AppAdmin/Transactions/SinglePaymentIntent', [
+        //     'paymentIntent' => $paymentIntent,
+        // ]);
+        return Inertia::render('AppAdmin/Transactions/SinglePaymentIntent');
     }
 }

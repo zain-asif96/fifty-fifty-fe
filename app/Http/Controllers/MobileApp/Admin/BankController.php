@@ -12,7 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 
-class BankController extends Controller
+class AppBankController extends Controller
 {
     public function index(Request $request): Response
     {
@@ -39,7 +39,7 @@ class BankController extends Controller
 
         $banks = $query->paginate(50);
 
-        return Inertia::render('Admin/Banks/Index', [
+        return Inertia::render('AppAdmin/Banks/Index', [
             'banks' => $banks,
             'countries' => Country::supportedCountries(),
         ]);

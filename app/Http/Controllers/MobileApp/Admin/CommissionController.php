@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-class CommissionController extends Controller
+class AppCommissionController extends Controller
 {
     public function commissionPage(Request $request): \Inertia\Response
     {
@@ -38,7 +38,7 @@ class CommissionController extends Controller
         }
 
         $commissions = $query->paginate(10);
-        return Inertia::render('Admin/Commissions/Index', [
+        return Inertia::render('AppAdmin/Commissions/Index', [
             'commissions' => $commissions,
         ]);
     }

@@ -39,4 +39,6 @@ class AdminController extends Controller
             'admins' => $admins,
         ]);
     }
+
+    
 }

@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Constraint\Count;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -35,13 +36,15 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function dashboard(): RedirectResponse|Response
+    public function dashboard(Request $request): RedirectResponse|Response
     {
         if (auth()->user()->auth_method === User::AUTO_AUTH_METHOD) {
             Auth::logout();
             return redirect(route('login'));
         }
 
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'authdata' => $request->session()->get('authdata')
+        ]);
     }
 }

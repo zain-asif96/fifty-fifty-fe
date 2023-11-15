@@ -14,7 +14,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 
-class CurrencyController extends Controller
+class AppCurrencyController extends Controller
 {
     public function currenciesPage(Request $request):Response
     {
@@ -33,7 +33,7 @@ class CurrencyController extends Controller
         }
         $currencies = $query->paginate(25);
 
-            return Inertia::render('Admin/Currencies/Index', [
+            return Inertia::render('AppAdmin/Currencies/Index', [
             'currencies' => $currencies,
             'info' => [
                 'fetched_at' => $fetched_at ? Carbon::parse($fetched_at)->diffForHumans() : ''

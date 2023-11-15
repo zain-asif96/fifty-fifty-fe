@@ -11,7 +11,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 
-class CountriesController extends Controller
+class AppCountriesController extends Controller
 {
     public function countriesPage(Request $request): Response
     {
@@ -43,7 +43,7 @@ class CountriesController extends Controller
 
         $countries = $query->paginate(25);
 
-        return Inertia::render('Admin/Countries/Index', [
+        return Inertia::render('AppAdmin/Countries/Index', [
             'countries' => $countries,
             'currencies' => Currency::all(),
         ]);

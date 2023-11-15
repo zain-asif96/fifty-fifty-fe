@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Classes\CurrencyExchange;
 use App\Http\Controllers\Controller;
@@ -19,7 +19,7 @@ use App\Models\Transaction;
 use App\Models\Receiver;
 
 
-class PostController extends Controller
+class AppPostController extends Controller
 {
     public function postsPage(Request $request): Response
     {
@@ -53,10 +53,11 @@ class PostController extends Controller
 
         $posts = $query->paginate(10);
         $receivers = Receiver::all();
-        return Inertia::render('Admin/Posts/Index', [
-            'posts' => $posts,
-            'receivers' => $receivers,
-        ]);
+        // return Inertia::render('AppAdmin/Posts/Index', [
+        //     'posts' => $posts,
+        //     'receivers' => $receivers,
+        // ]);
+        return Inertia::render('AppAdmin/Posts/Index');
         ##update it according to the condition just added to check if the crud working
     }
 

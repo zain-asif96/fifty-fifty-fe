@@ -22,11 +22,11 @@ class PostController extends Controller
 
     public function index(Request $request): Collection|array
     {
-        $posts = Post::getAvailablePosts(100,false,$request->has('country_code') ? $request->country_code : null);
+        $posts = Post::getAvailablePosts(100, false, $request->has('country_code') ? $request->country_code : null);
 
         // convert payment intent amount from cents to dollars
-        foreach ($posts as $post){
-           $post['transaction']['paymentIntent']['amount'] = $post['transaction']['paymentIntent']['amount'] / 100;
+        foreach ($posts as $post) {
+            $post['transaction']['paymentIntent']['amount'] = $post['transaction']['paymentIntent']['amount'] / 100;
         }
 
         return $posts;

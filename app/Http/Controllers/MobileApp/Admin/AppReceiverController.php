@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Receiver;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ReceiverController extends Controller
+class AppReceiverController extends Controller
 {
 
     public function receiversPage(Request $request): Response
@@ -35,14 +35,15 @@ class ReceiverController extends Controller
 
         $receivers = $query->paginate(5);
 
-        return Inertia::render('Admin/Receivers/Index', [
-            'receivers' =>$receivers
-        ]);
+        // return Inertia::render('AppAdmin/Receivers/Index', [
+        //     'receivers' =>$receivers
+        // ]);
+        return Inertia::render('AppAdmin/Receivers/Index');
     }
 
     public function singleReceiverPage(Request $request, Receiver $receiver): Response
     {
-        return Inertia::render('Admin/Receivers/SingleReceiver', [
+        return Inertia::render('AppAdmin/Receivers/SingleReceiver', [
             'receiver' => $receiver
         ]);
     }

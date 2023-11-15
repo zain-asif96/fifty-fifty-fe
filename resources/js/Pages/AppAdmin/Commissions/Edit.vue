@@ -9,7 +9,7 @@ const notification = useNotificationStore();
 const api = useAPI();
 // Props:
 const props = defineProps({
-    timeData: {
+    commissionsData: {
         type: Object,
         required: true
     },
@@ -18,67 +18,57 @@ const props = defineProps({
         default: false
     },
 })
-const time = reactive({
-    // 'model_name': 'App\\Models\\Post',
-    'time': props.timeData.time,
+console.log('commissionsData',props.commissionsData);
+const commissions = reactive({
+    'from': props.commissionsData.value.from,
+    'to': props.commissionsData.value.to,
+    'amount': props.commissionsData.value.amount,
 })
 const isModalOpened = ref(props.show);
-// const closeModal = () => {
-//     isModalOpened.value = false;
-// }
-const openModal = () => {
-    console.log('inside openModal ');
-    if (props.show) return;
-    isModalOpened.value = true;
-}
-
 
 // Emits
 const emit = defineEmits(['close'])
 
 function close(isFetchData) {
-    console.log('this s iedit', isFetchData)
-        ;
     emit("close", isFetchData);
 }
 const applyEdit = async () => {
     api.startRequest();
-    console.log('timeData', props.timeData.value.id, time);
-    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    // // Set the CSRF token as a default header for all Axios requests
-    // axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    // console.log('csrfToken', csrfToken);
+    console.log('commissionsData', props.commissionsData.value.id, commissions);
     try {
-        // const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
-        const res = await axios.put('/admin/update-status-time/' + props.timeData.value.id, time)
-
+        const res = await axios.put('/admin/commission/' + props.commissionsData.value.id, commissions)
+    console.log('res', res);
         if (res.data) {
-            notification.notify('Time updated', 'success');
-            // endEdit();
-            close(time);
+            notification.notify('Commission updated', 'success');
+            close(commissions);
         }
     } catch (errors) {
         console.log('errors', errors);
-        // notification.notify('Error', 'error');
-        // api.handleErrors(errors)
+        notification.notify('Error', 'error');
+        api.handleErrors(errors)
     } finally {
-        // api.requestCompleted();
+        api.requestCompleted();
     }
 }
 
 const endEdit = () => {
     api.errors.value = {};
-    timeData.value = {};
+    commissionsData.value = {};
 }
 </script>
 
 <template>
     <div>
-        <Modal :close="close" :isOpen="isModalOpened" header="Edit Time">
+        <Modal :close="close" :isOpen="isModalOpened" header="Amount commissions">
             <template #content>
                 <form class="  p-2 mb-2" @submit.prevent="submit">
                     <div class="flex flex-wrap gap-2 mb-3 justify-content-center">
-                        <TextInput v-model="time.time" label="Time (min)" placeholder="Time (min)" required title="code" />
+                        <TextInput v-model="commissions.from" label="From" placeholder="From" required
+                            title="code" />
+                        <TextInput v-model="commissions.to" label="To" placeholder="To" required
+                            title="code" />
+                        <TextInput v-model="commissions.amount" label="Amount" placeholder="Amount" required
+                            title="code" />
                     </div>
 
                     <div class="flex gap-4 items-center">
@@ -141,7 +131,7 @@ select#rate_source {
     cursor: pointer;
 }
 
-.slider::-moz-range-thumb {
+.slider::-moz-commissions-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;

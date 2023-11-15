@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Http;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,7 +36,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $response = Http::withHeaders([
+        ])->post('https://fifty-backend-production.up.railway.app/user-auth/login', [
+                    'email' => 'admin@gmail.com',
+                    'password' => '123456',
+                ]);
+
+        // return "Hello World";
+
+
+        return redirect()->intended(RouteServiceProvider::HOME)->with("authdata", $response->json());
     }
 
     /**

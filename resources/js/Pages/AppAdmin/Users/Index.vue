@@ -1,23 +1,25 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Pagination from "@/Components/Custom/Pagination.vue";
-import { Head } from '@inertiajs/vue3';
-import TextInput from "@/Components/TextInput.vue";
+import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, onMounted } from "vue";
+import TextInput from "@/Components/TextInput.vue";
+import { request } from "@/helpers/requestHelper.js";
 
-import { router } from '@inertiajs/vue3'
 import { useSortingStore } from "@/stores/sorting";
-
 const props = defineProps({
-    admins: {
+    users: {
         required: true,
         type: Object
     }
 })
 // sorting
-var currentPage = ref(1)
 var searchValue = ref('');
+var usersData = ref([]);
+
 var disableClick = ref(false)
+var currentPage = ref(1)
+
 const store = useSortingStore();
 const sort = (column) => {
     searchValue.value = searchValue.value != null ? searchValue.value : ""
@@ -31,35 +33,123 @@ const sort = (column) => {
 // Search
 const search = () => {
     router.visit(`?page=${currentPage.value}&q=${searchValue.value}&column=${store.column}&type=${store.type}`);
+    // router.visit(`?q=${searchValue.value}&column=${store.column}&type=${store.type}`);
+
 }
 const clearSearch = () => {
     router.visit(`?q=`);
 }
-
 onMounted(() => {
-    searchValue.value = new URLSearchParams(window.location.search).get('q');
+    // searchValue.value = new URLSearchParams(window.location.search).get('q');
+    // let cpg = new URLSearchParams(window.location.search).get('page');
+    // currentPage.value = cpg != null ? cpg : 1
+    let q = new URLSearchParams(window.location.search).get('q');
     let cpg = new URLSearchParams(window.location.search).get('page');
     currentPage.value = cpg != null ? cpg : 1
+    if (!q) {
+        getAllUsers(currentPage.value)
+    }
+    if (q) {
+        getUsers(q)
+
+        searchValue.value = q;
+    }
+
 });
+
+const getUsers = async (search = '', type = 'user') => {
+    let query = ''
+    if (search) {
+        query = `query=${search}`
+    }
+    if (type) {
+        query += `&type=${type}`
+
+    }
+    try {
+        let res = await request({ type: 'get', url: 'user-auth/search', query })
+        console.log({ res });
+        if (res?.data?.data) {
+            let data = res?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => a[col].localeCompare(b[col]));
+
+                } else {
+                    data = data?.sort((a, b) => b[col].localeCompare(a[col]));
+
+                }
+            }
+            usersData.value = { ...usersData.value, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
+const getAllUsers = async (page = '1', limit = '10') => {
+    let query = ''
+    if (page) {
+        query = `page=${page}`
+    }
+    if (limit) {
+        query += `&limit=${limit}`
+
+    }
+    try {
+        let res = await request({ type: 'get', url: `user-auth/getAll`, query })
+        console.log({ res });
+        if (res?.data?.data) {
+            let data = res?.data?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => a[col].localeCompare(b[col]));
+
+                } else {
+                    data = data?.sort((a, b) => b[col].localeCompare(a[col]));
+
+                }
+            }
+
+            usersData.value = { ...res?.data?.data, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
 </script>
 
 <template>
-    <Head title="Admins">
+    <Head title="Users">
         <title>
-            Admins
+            Users
         </title>
     </Head>
+
     <AdminLayout>
         <div class="ml-4 md:ml-16">
             <div class="mt-16 mb-8 text-xl flex items-center justify-between">
                 <div>
-                    Admins
+                    Users
                 </div>
-                <div class="text-sm">
-                    Page: {{ props.admins.current_page }}
-                    | total: {{ props.admins.total }}
-                    | from: {{ props.admins.from }},
-                    to: {{ props.admins.to }}
+                <div class="text-sm" v-if="usersData?.page">
+                    Page: {{ usersData?.page }}
+                    | total: {{ usersData?.total }}
+                    | from: {{ usersData.from }},
+                    to: {{ usersData.to }}
                 </div>
             </div>
 
@@ -82,61 +172,62 @@ onMounted(() => {
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
-                                @click="sort('first_name')">
-                                Name <span class="fw-100">{{ store.column == 'first_name' ? '(' + store.type + ')' : ''
+                                @click="sort('name')">
+                                Name <span class="fw-100">{{ store.column == 'name' ? '(' + store.type + ')' : ''
                                 }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 @click="sort('email')">
-                                Email <span class="fw-100">{{ store.column == 'email' ? '(' + store.type + ')' : '' }}</span>
+                                Email <span class="fw-100">{{ store.column == 'email' ? '(' + store.type + ')' : ''
+                                }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 @click="sort('phone')">
-                                Phone <span class="fw-100">{{ store.column == 'phone' ? '(' + store.type + ')' : '' }}</span>
-                            </th>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
-                                @click="sort('country')">
-                                Country Code <span class="fw-100">{{ store.column == 'country' ? '(' + store.type + ')' : ''
+                                Phone <span class="fw-100">{{ store.column == 'phone' ? '(' + store.type + ')' : ''
                                 }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
-                                @click="sort('ip_address')">
-                                IP Address <span class="fw-100">{{ store.column == 'ip_address' ? '(' + store.type + ')' : ''
+                                @click="sort('country_code')">
+                                Country Code <span class="fw-100">{{ store.column == 'country_code' ? '(' + store.type + ')'
+                                    : ''
                                 }}</span>
                             </th>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col">
-                                <!--                                @click="sort('role')"-->
-                                Role <span class="fw-100">{{ store.column == 'role' ? '(' + store.type + ')' : '' }}</span>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
+                                @click="sort('ip')">
+                                IP Address <span class="fw-100">{{ store.column == 'ip' ? '(' + store.type + ')' :
+                                    ''
+                                }}</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="admin in props.admins.data" :key="admin.id"
+                        <tr v-for="user in usersData?.data" :key="user.id"
                             class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
-                                {{ admin.first_name }} {{ admin.last_name }}
+                                <Link :href="route('app.single.user.page', user.id)"
+                                    class="text-blue-700 hover:text-blue-900 hover:underline">
+                                {{ user.name }}
+                                <!-- {{ user.last_name }} -->
+                                </Link>
                             </th>
                             <td class="px-6 py-4">
-                                {{ admin.email }}
+                                {{ user.email }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.phone }}
+                                {{ user.phone }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.country }}
+                                {{ user.country_code }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ admin.ip_address }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ admin.role }}
+                                {{ user.ip }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <Pagination :links="props.admins.links" />
+            <!-- <Pagination :links="props.users.links" /> -->
         </div>
 
     </AdminLayout>
@@ -145,9 +236,10 @@ onMounted(() => {
 <script>
 
 export default {
-    name: 'Admins'
+    name: 'Users'
 }
 </script>
+
 <style scoped>
 .clickable {
     cursor: pointer;
@@ -162,4 +254,5 @@ export default {
 
 th span {
     font-size: 9px;
-}</style>
+}
+</style>

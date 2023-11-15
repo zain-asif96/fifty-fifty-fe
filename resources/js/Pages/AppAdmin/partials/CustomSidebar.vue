@@ -33,20 +33,21 @@ const toggleSidebar = () => {
                 <CloseIcon />
             </button>
             <ul class="space-y-2">
-                <SidebarElement icon="dashboard" route-name="admin.panel.page" title="admin panel" />
+                <SidebarElement icon="dashboard" route-name="app.admin.panel.page" title="admin panel" />
 
-                <SidebarElement :active-routes="['users.page', 'single.user.page']" icon="users" route-name="users.page"
-                    title="users" />
+                <SidebarElement :active-routes="['app.users.page', 'app.single.user.page']" icon="users"
+                    route-name="app.users.page" title="users" />
 
-                <SidebarElement icon="admins" route-name="admins.page" title="admins" />
+                <SidebarElement icon="admins" route-name="app.admins.page" title="admins" />
 
-                <SidebarElement :active-routes="['transactions.page', 'payment.intent.page']" icon="transactions"
-                    route-name="transactions.page" title="transactions" />
+                <SidebarElement :active-routes="['app.transactions.page', 'app.payment.intent.page']" icon="transactions"
+                    route-name="app.transactions.page" title="transactions" />
 
-                <SidebarElement :active-routes="['posts.page']" icon="posts" route-name="posts.page" title="posts" />
+                <SidebarElement :active-routes="['app.posts.page']" icon="posts" route-name="app.posts.page"
+                    title="posts" />
 
-                <SidebarElement :active-routes="['receivers.page', 'single.receiver.page']" icon="receivers"
-                    route-name="receivers.page" title="receivers" />
+                <SidebarElement :active-routes="['app.receivers.page', 'app.single.receiver.page']" icon="receivers"
+                    route-name="app.receivers.page" title="receivers" />
 
                 <SidebarElement icon="banks" route-name="banks.page" title="banks" />
 

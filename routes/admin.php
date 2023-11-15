@@ -1,4 +1,5 @@
 <?php
+// web admin routes
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BankController;
@@ -9,6 +10,17 @@ use App\Http\Controllers\Admin\ReceiverController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CommissionController;
+// app admin routes
+use App\Http\Controllers\MobileApp\Admin\AppAdminController;
+// use App\Http\Controllers\MobileApp\Admin\AppBankController;
+// use App\Http\Controllers\MobileApp\Admin\AppCountriesController;
+// use App\Http\Controllers\MobileApp\Admin\AppCurrencyController;
+use App\Http\Controllers\MobileApp\Admin\AppPostController;
+use App\Http\Controllers\MobileApp\Admin\AppReceiverController;
+use App\Http\Controllers\MobileApp\Admin\AppTransactionController;
+use App\Http\Controllers\MobileApp\Admin\AppUsersController;
+// use App\Http\Controllers\MobileApp\Admin\AppCommissionController;
+
 use App\Http\Controllers\UpdateStatusController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,10 +29,17 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     // admins
     Route::get('/admin', [AdminController::class, 'adminPanelPage'])->name('admin.panel.page');
     Route::get('/admin/admins', [AdminController::class, 'adminsPage'])->name('admins.page');
+    // app admins
+    Route::get('/app/admin', [AppAdminController::class, 'appAdminPanelPage'])->name('app.admin.panel.page');
+    Route::get('/app/admin/admins', [AppAdminController::class, 'appAdminsPage'])->name('app.admins.page');
 
     // transactions
     Route::get('/admin/transactions', [TransactionController::class, 'transactionsPage'])->name('transactions.page');
     Route::get('/admin/transactions/payment-intent/{paymentIntent}', [TransactionController::class, 'paymentIntentPage'])->name('payment.intent.page');
+
+    // app transactions
+    Route::get('/app/admin/transactions', [AppTransactionController::class, 'transactionsPage'])->name('app.transactions.page');
+    Route::get('/app/admin/transactions/payment-intent/{paymentIntent}', [AppTransactionController::class, 'paymentIntentPage'])->name('app.payment.intent.page');
 
     // Post
     Route::get('/admin/posts', [PostController::class, 'postsPage'])->name('posts.page');
@@ -28,6 +47,13 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     Route::post('/admin/posts/refresh/{post}', [PostController::class, 'refresh'])->name('posts.refresh');
     Route::put('/admin/posts/update/{post}', [PostController::class, 'update'])->name('posts.refresh');
     Route::delete('/admin/posts/delete/{post}', [PostController::class, 'delete'])->name('posts.delete');
+
+    // app Posts
+    Route::get('/app/admin/posts', [AppPostController::class, 'postsPage'])->name('app.posts.page');
+    Route::post('/app/admin/posts/store', [AppPostController::class, 'store'])->name('app.posts.store');
+    Route::post('/app/admin/posts/refresh/{post}', [AppPostController::class, 'refresh'])->name('app.posts.refresh');
+    Route::put('/app/admin/posts/update/{post}', [AppPostController::class, 'update'])->name('app.posts.refresh');
+    Route::delete('/app/admin/posts/delete/{post}', [AppPostController::class, 'delete'])->name('app.posts.delete');
     // UPDATE ROUTE MISSING
 
     // banks
@@ -52,10 +78,18 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     // users
     Route::get('/admin/users', [UsersController::class, 'usersPage'])->name('users.page');
     Route::get('/admin/users/{user}', [UsersController::class, 'singleUserPage'])->name('single.user.page');
+    
+    //app users
+    Route::get('/app/admin/users', [AppUsersController::class, 'usersPage'])->name('app.users.page');
+    Route::get('/app/admin/users/{user}', [AppUsersController::class, 'singleUserPage'])->name('app.single.user.page');
 
     // receivers
     Route::get('/admin/receivers', [ReceiverController::class, 'receiversPage'])->name('receivers.page');
     Route::get('/admin/receivers/{receiver}', [ReceiverController::class, 'singleReceiverPage'])->name('single.receiver.page');
+
+    // app receivers
+    Route::get('/app/admin/receivers', [AppReceiverController::class, 'receiversPage'])->name('app.receivers.page');
+    Route::get('/app/admin/receivers/{receiver}', [AppReceiverController::class, 'singleReceiverPage'])->name('app.single.receiver.page');
 
     Route::get('/admin/update-status-time', [UpdateStatusController::class, 'index'])->name('time.page');
     Route::post('/admin/update-status-time', [UpdateStatusController::class, 'store'])->name('update.status.store');
