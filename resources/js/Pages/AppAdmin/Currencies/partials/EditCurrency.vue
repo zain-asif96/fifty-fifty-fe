@@ -6,10 +6,15 @@ import TextInput from "@/Components/TextInput.vue";
 // import SelectInput from "@/Components/Custom/SelectInput.vue";
 import Spinner from "@/Components/Custom/Spinner.vue";
 import Modal from "@/Components/Custom/Modal.vue";
+import { userUserStore } from "@/stores/user";
+import { BASE_URL } from "@/helpers/requestHelper";
 
 const notification = useNotificationStore();
 const api = useAPI();
-
+const $userStore = userUserStore();
+let token = $userStore.getUserApp
+    ? $userStore.getUserApp?.data?.auth_token
+    : "";
 // Props:
 const props = defineProps({
     currencyData: {
@@ -41,12 +46,24 @@ function close(isFetchData) {
     emit("close", isFetchData);
 }
 const applyEdit = async () => {
-    api.startRequest();
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    // api.startRequest();
+
+    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     // Set the CSRF token as a default header for all Axios requests
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+    // axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+
+    console.log({ valll: props?.currencyData.value });
+    let payload = {
+        ...props.currencyData.value,
+        special_rate: Number(props.currencyData.value?.special_rate),
+        rate: Number(props.currencyData.value?.rate),
+        symbol: props.currencyData.value?.symbol ? props.currencyData.value?.symbol : ''
+
+    }
     try {
-        const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
+        const res = await axios.put(BASE_URL + '/currencies/' + props.currencyData.value.id, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         if (res.data) {
             console.log('res', res);
             let data = props.currencyData.value

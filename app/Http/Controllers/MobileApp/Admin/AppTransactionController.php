@@ -87,13 +87,16 @@ class AppTransactionController extends Controller
         return Inertia::render('AppAdmin/Transactions/Index');
     }
 
-    public function paymentIntentPage(Request $request, PaymentIntent $paymentIntent): Response
+    public function paymentIntentPage(Request $request, $paymentIntent): Response
     {
-        $paymentIntent->load('transaction');
+        // $paymentIntent->load('transaction');
 
         // return Inertia::render('AppAdmin/Transactions/SinglePaymentIntent', [
         //     'paymentIntent' => $paymentIntent,
         // ]);
-        return Inertia::render('AppAdmin/Transactions/SinglePaymentIntent');
+        return Inertia::render('AppAdmin/Transactions/SinglePaymentIntent',
+        [
+                'paymentIntent' => $paymentIntent,
+            ]);
     }
 }

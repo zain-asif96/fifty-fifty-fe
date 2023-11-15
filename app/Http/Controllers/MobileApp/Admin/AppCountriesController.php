@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Countries\StoreCountryRequest;
@@ -43,10 +43,11 @@ class AppCountriesController extends Controller
 
         $countries = $query->paginate(25);
 
-        return Inertia::render('AppAdmin/Countries/Index', [
-            'countries' => $countries,
-            'currencies' => Currency::all(),
-        ]);
+        // return Inertia::render('AppAdmin/Countries/Index', [
+        //     'countries' => $countries,
+        //     'currencies' => Currency::all(),
+        // ]);
+        return Inertia::render('AppAdmin/Countries/Index');
     }
 
     public function store(StoreCountryRequest $request)

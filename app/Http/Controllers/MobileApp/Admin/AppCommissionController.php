@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Commission\UpdateRequest;
@@ -38,9 +38,10 @@ class AppCommissionController extends Controller
         }
 
         $commissions = $query->paginate(10);
-        return Inertia::render('AppAdmin/Commissions/Index', [
-            'commissions' => $commissions,
-        ]);
+        // return Inertia::render('AppAdmin/Commissions/Index', [
+        //     'commissions' => $commissions,
+        // ]);
+        return Inertia::render('AppAdmin/Commissions/Index');
     }
 
     public function updateCommission(UpdateRequest $request, Commission $commission)

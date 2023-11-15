@@ -41,10 +41,13 @@ class AppReceiverController extends Controller
         return Inertia::render('AppAdmin/Receivers/Index');
     }
 
-    public function singleReceiverPage(Request $request, Receiver $receiver): Response
+    public function singleReceiverPage(Request $request, $receiver): Response
     {
-        return Inertia::render('AppAdmin/Receivers/SingleReceiver', [
-            'receiver' => $receiver
-        ]);
+        // return Inertia::render('AppAdmin/Receivers/SingleReceiver', [
+        //     'receiver' => $receiver
+        // ]);
+        return Inertia::render('AppAdmin/Receivers/SingleReceiver',[
+                'receiver' => $receiver
+            ]);
     }
 }

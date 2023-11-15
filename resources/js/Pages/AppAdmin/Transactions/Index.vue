@@ -214,7 +214,8 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                                 {{ transaction.created_at }}
                             </td>
                             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
-                                <Link :href="transaction?.user?.id ? route('single.user.page', transaction?.user?.id) : ''"
+                                <Link
+                                    :href="transaction?.user?.id ? route('app.single.user.page', transaction?.user?.id) : ''"
                                     class="text-blue-700 hover:text-blue-900 hover:underline">
                                 {{ transaction.sender_firstname || '-' }}
                                 {{ transaction.sender_lastname || '-' }}
@@ -225,7 +226,7 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                             </th>
                             <td class="px-6 py-4">
                                 <Link
-                                    :href="transaction.receiver?.id ? route('single.receiver.page', transaction.receiver?.id) : ''"
+                                    :href="transaction.receiver?.id ? route('app.single.receiver.page', transaction.receiver?.id) : ''"
                                     class="text-blue-700 hover:text-blue-900 hover:underline">
 
                                 {{ transaction.receiver_firstname || '-' }}
@@ -236,7 +237,7 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                             </td>
                             <td class="px-6 py-4">
                                 <Link
-                                    :href="transaction.payment_intent?.id ? route('payment.intent.page', transaction.payment_intent.id) : ''"
+                                    :href="transaction.transaction_id ? route('app.payment.intent.page', transaction.transaction_id) : ''"
                                     class="text-blue-700 hover:text-blue-900 hover:underline">
                                 {{ transaction.sender_amount ? parseFloat(transaction.sender_amount /
                                     100).toFixed(2) : '' }}
@@ -247,7 +248,7 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                             </td>
 
                             <td class="px-6 py-4 capitalize">
-                                {{ transaction.status?.replaceAll('_', ' ') }}
+                                {{ transaction.pairing_status?.replaceAll('_', ' ') }}
                             </td>
                             <td class="px-6 py-4 capitalize">
                                 {{ transaction.type?.replaceAll('_', ' ') }}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Classes\CurrencyExchange;
 use App\Http\Controllers\Controller;
@@ -33,12 +33,15 @@ class AppCurrencyController extends Controller
         }
         $currencies = $query->paginate(25);
 
-            return Inertia::render('AppAdmin/Currencies/Index', [
-            'currencies' => $currencies,
-            'info' => [
-                'fetched_at' => $fetched_at ? Carbon::parse($fetched_at)->diffForHumans() : ''
-            ]
-        ]);
+        //     return Inertia::render('AppAdmin/Currencies/Index', [
+        //     'currencies' => $currencies,
+        //     'info' => [
+        //         'fetched_at' => $fetched_at ? Carbon::parse($fetched_at)->diffForHumans() : ''
+        //     ]
+        // ]);
+        
+        return Inertia::render('AppAdmin/Currencies/Index');
+        
     }
 
     public function store(StoreCurrencyRequest $request){

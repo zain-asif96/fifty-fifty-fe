@@ -4,17 +4,19 @@ import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
 import Modal from "@/Components/Custom/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { userUserStore } from "@/stores/user";
 import { BASE_URL } from "@/helpers/requestHelper";
+import { userUserStore } from "@/stores/user";
 
 const notification = useNotificationStore();
-const api = useAPI();
-
 const $userStore = userUserStore();
 let token = $userStore.getUserApp
     ? $userStore.getUserApp?.data?.auth_token
     : "";
 
+
+console.log({ sss: $userStore.getUserApp });
+
+const api = useAPI();
 // Props:
 const props = defineProps({
     commissionsData: {
@@ -28,9 +30,9 @@ const props = defineProps({
 })
 console.log('commissionsData', props.commissionsData);
 const commissions = reactive({
-    'from': props.commissionsData.value.from,
-    'to': props.commissionsData.value.to,
-    'amount': props.commissionsData.value.amount,
+    'from': '',
+    'to': '',
+    'amount': '',
 })
 const isModalOpened = ref(props.show);
 
@@ -40,18 +42,17 @@ const emit = defineEmits(['close'])
 function close(isFetchData) {
     emit("close", isFetchData);
 }
-const applyEdit = async () => {
+const applyAdd = async () => {
     api.startRequest();
-    console.log('commissionsData', props.commissionsData.value.id, commissions);
+    console.log('commissionsData', commissions);
     try {
-        const res = await axios.put(BASE_URL + '/commissions/' + props.commissionsData.value.id, commissions,
-            {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+        const res = await axios.post(BASE_URL + '/commissions', commissions, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         console.log('res', res);
         if (res.data) {
-            notification.notify('Commission updated', 'success');
-            close(res?.data.data);
+            notification.notify('Commission Added', 'success');
+            close(res?.data?.data);
         }
     } catch (errors) {
         console.log('errors', errors);
@@ -80,9 +81,9 @@ const endEdit = () => {
                     </div>
 
                     <div class="flex gap-4 items-center">
-                        <button type="submit" @click="applyEdit"
+                        <button type="submit" @click="applyAdd"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Edit
+                            Add
                         </button>
                         <button type="button" @click="close"
                             class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">

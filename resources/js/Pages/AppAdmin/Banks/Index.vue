@@ -2,20 +2,27 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Pagination from "@/Components/Custom/Pagination.vue";
 import { Head } from '@inertiajs/vue3';
-import CreateBank from "@/Pages/Admin/Banks/partials/CreateBank.vue";
+import CreateBank from "@/Pages/AppAdmin/Banks/partials/CreateBank.vue";
 import DeleteIcon from "@/Icons/DeleteIcon.vue";
 import EditIcon from "@/Icons/EditIcon.vue";
 import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
 import Spinner from "@/Components/Custom/Spinner.vue";
 import { reactive, ref, onMounted } from "vue";
-import EditBank from "@/Pages/Admin/Banks/partials/EditBank.vue";
+import EditBank from "@/Pages/AppAdmin/Banks/partials/EditBank.vue";
 import { router } from '@inertiajs/vue3'
 import { useSortingStore } from "@/stores/sorting";
 import TextInput from "@/Components/TextInput.vue";
+import { request, BASE_URL } from "@/helpers/requestHelper.js";
+import { useHelpers } from "@/Composables/useHelpers";
+import { userUserStore } from "@/stores/user";
 
 
 const api = useAPI();
+const $userStore = userUserStore();
+let token = $userStore.getUserApp
+    ? $userStore.getUserApp?.data?.auth_token
+    : "";
 const notification = useNotificationStore();
 
 const props = defineProps({
@@ -29,12 +36,24 @@ const props = defineProps({
     }
 })
 
+// vars
+
+const allBanks = ref({})
+const allCountries = ref({})
+
+const helpers = useHelpers()
 // Adding
-const bankAdded = () => {
-    props.banks.total++;
+const bankAdded = (res) => {
+    let tempBank = allBanks.value.data
+    console.log({ tempBank });
+    tempBank.unshift(res)
+
+    allBanks.value.total = allBanks.value.total + 1;
+    allBanks.value.data = tempBank
 }
 
 const editedBank = reactive({});
+
 
 // Editing
 const edit = (bank) => {
@@ -45,8 +64,11 @@ const endEdit = () => {
 }
 
 const bankEdited = (bank) => {
-    let index = props.banks.data.findIndex(oldInfo => oldInfo.id === bank.id);
-    props.banks.data.splice(index, 1, bank);
+    let tempBanks = allBanks.value.data
+    let index = tempBanks?.findIndex(oldInfo => oldInfo.id == bank.id);
+    console.log({ index, bank, tempBanks });
+    tempBanks.splice(index, 1, { ...tempBanks[index], ...bank })
+    allBanks.value.data = tempBanks
 }
 
 // Deleting
@@ -57,14 +79,23 @@ const deleteBank = async (bank) => {
     api.startRequest();
 
     try {
-        const res = await axios.delete('/admin/banks/delete/' + bank.id)
-
-        if (res.data.id || res.data.status === 'success') {
+        const res = await axios.delete(BASE_URL + '/banks/delete/' + bank.id, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        console.log({ res });
+        if (res.data.id || res.data.status === 'OK') {
             notification.notify('Bank deleted', 'success');
+            let tempBank = allBanks.value?.data
+            let tempBankIndex = tempBank?.findIndex((dt) => dt?.id == bank?.id)
+            tempBank.splice(tempBankIndex, 1)
+            allBanks.value = { ...allBanks.value, total: allBanks.value.total - 1, data: tempBank }
             bank.id = 'deleted';
-            props.banks.total--;
+
+            // allBanks.value = {allBanks.value.total - 1};
+
         }
     } catch (errors) {
+        console.log({ errors });
         notification.notify('Error', 'error');
         api.handleErrors(errors)
     } finally {
@@ -89,17 +120,114 @@ const sort = (column) => {
     disableClick.value = true
     store.sortValues(column);
     let res = router.visit(`?page=${currentPage.value}&q=${searchValue.value}&column=${store.column}&type=${store.type}`);
-if (res) {
+    if (res) {
         disableClick.value = false
-    }};
+    }
+};
 const clearSearch = () => {
     router.visit(`?q=`);
 }
+
 onMounted(() => {
-    searchValue.value = new URLSearchParams(window.location.search).get('q');
+
+    const q = new URLSearchParams(window.location.search).get('q');
     let cpg = new URLSearchParams(window.location.search).get('page');
-    currentPage.value = cpg!=null?cpg:1
+    currentPage.value = cpg != null ? cpg : 1
+
+    if (!q) {
+        getAllBanks(currentPage.value)
+
+    }
+    if (q) {
+        getBanks(q)
+
+        searchValue.value = q;
+    }
+    getAllCountry()
 });
+
+const getAllCountry = async () => {
+    let country = await helpers.getAllCountriesAdmin()
+    allCountries.value = country
+
+}
+
+const getBanks = async (search = '') => {
+    let query = ''
+    if (search) {
+        query = `query=${search}`
+    }
+
+    try {
+        let res = await request({ type: 'get', url: 'banks/search', query })
+        if (res?.data?.data) {
+            let data = res?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? a[col]?.localeCompare(b[col]) : a[col] - b[col]);
+
+                } else {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? b[col]?.localeCompare(a[col]) : b[col] - a[col]);
+
+                }
+            }
+            allBanks.value = { ...allBanks.value, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
+
+
+const getAllBanks = async (page = '1', limit = '10') => {
+    let query = ''
+    if (page) {
+        query = `page=${page}`
+    }
+    if (limit) {
+        query += `&limit=${limit}`
+
+    }
+    try {
+        let res = await request({ type: 'get', url: `banks/all`, query })
+        console.log({ res });
+        if (res?.data?.data) {
+            let data = res?.data?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? a[col]?.localeCompare(b[col]) : a[col] - b[col]);
+
+                } else {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? b[col]?.localeCompare(a[col]) : b[col] - a[col]);
+
+                }
+            }
+            console.log({ dataaaa: data });
+            allBanks.value = { ...res?.data?.data, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
+
+const findCountryById = (id = 1) => {
+    const findCountry = allCountries.value?.data?.find((dt) => dt?.id === id)
+    return findCountry
+}
 </script>
 
 <template>
@@ -115,19 +243,19 @@ onMounted(() => {
                 <div>
                     Banks
                 </div>
-                <div class="text-sm">
-                    Page: {{ props.banks.current_page }}
-                    | total: {{ props.banks.total }}
-                    | from: {{ props.banks.from }},
-                    to: {{ props.banks.to }}
+                <div class="text-sm" v-if="allBanks.page">
+                    Page: {{ allBanks.page }}
+                    | total: {{ allBanks.total }}
+                    | from: {{ allBanks.from }},
+                    to: {{ allBanks.to }}
                 </div>
             </div>
 
 
-            <CreateBank @bankAdded="bankAdded" :countries="countries" />
+            <CreateBank @bankAdded="bankAdded" :countries="allCountries" />
 
             <EditBank v-if="editedBank.value?.id" @endEdit="endEdit" @bankEdited="bankEdited" :edited-bank="editedBank"
-                :countries="countries" />
+                :countries="allCountries" />
             <div class="flex items-end gap-3 ">
                 <TextInput v-model="searchValue" class="mb-8" label="Search" placeholder="Search" title="searchValue"
                     v-on:keyup.enter="search" />
@@ -146,14 +274,19 @@ onMounted(() => {
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col" @click="sort('id')">
-                                #ID <span class="fw-100">{{ store.column == 'id' ? '('+store.type+')' : '' }}</span>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
+                                @click="sort('id')">
+                                #ID <span class="fw-100">{{ store.column == 'id' ? '(' + store.type + ')' : '' }}</span>
                             </th>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col" @click="sort('label')">
-                                Bank Name <span class="fw-100">{{ store.column == 'label' ? '('+store.type+')' : '' }}</span>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
+                                @click="sort('label')">
+                                Bank Name <span class="fw-100">{{ store.column == 'label' ? '(' + store.type + ')' : ''
+                                }}</span>
                             </th>
-                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col" @click="sort('country')">
-                                Country <span class="fw-100">{{ store.column == 'country' ? '('+store.type+')' : '' }}</span>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col">
+                                Country <span class="fw-100">{{ store.column == 'country' ? '(' + store.type + ')' : ''
+                                }}</span>
+                                <!-- @click="sort('country')" -->
                             </th>
                             <th class="px-6 py-3" scope="col">
                                 Actions
@@ -161,7 +294,7 @@ onMounted(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="bank in props.banks.data" :key="bank.id" v-show="bank.id !== 'deleted'"
+                        <tr v-for="bank in allBanks.data" :key="bank.id" v-show="bank.id !== 'deleted'"
                             class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
 
                             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
@@ -171,7 +304,8 @@ onMounted(() => {
                                 {{ bank.label }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ bank.country ? bank.country.label : 'N/A' }} ({{ bank.country ? bank.country.code : 'N/A'
+                                {{ findCountryById(bank.country_id) ? findCountryById(bank.country_id).label : 'N/A' }} ({{
+                                    findCountryById(bank.country_id) ? findCountryById(bank.country_id).code : 'N/A'
                                 }})
                             </td>
                             <td class="px-6 py-4 flex gap-4 items-center">
@@ -189,7 +323,7 @@ onMounted(() => {
                 </table>
             </div>
 
-            <Pagination :links="props.banks.links" />
+            <!-- <Pagination :links="props.banks.links" /> -->
         </div>
 
     </AdminLayout>
@@ -212,7 +346,8 @@ export default {
     /* You can adjust the opacity as needed */
     pointer-events: none;
 }
-th span{
+
+th span {
     font-size: 9px;
 }
 </style>

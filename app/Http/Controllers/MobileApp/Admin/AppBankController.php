@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MobileApp\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Banks\DeleteBankRequest;
@@ -39,10 +39,11 @@ class AppBankController extends Controller
 
         $banks = $query->paginate(50);
 
-        return Inertia::render('AppAdmin/Banks/Index', [
-            'banks' => $banks,
-            'countries' => Country::supportedCountries(),
-        ]);
+        // return Inertia::render('AppAdmin/Banks/Index', [
+        //     'banks' => $banks,
+        //     'countries' => Country::supportedCountries(),
+        // ]);
+        return Inertia::render('AppAdmin/Banks/Index');
     }
 
     public function store(StoreBankRequest $request)

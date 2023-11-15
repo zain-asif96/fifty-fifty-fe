@@ -49,14 +49,14 @@ const toggleSidebar = () => {
                 <SidebarElement :active-routes="['app.receivers.page', 'app.single.receiver.page']" icon="receivers"
                     route-name="app.receivers.page" title="receivers" />
 
-                <SidebarElement icon="banks" route-name="banks.page" title="banks" />
+                <SidebarElement icon="banks" route-name="app.banks.page" title="banks" />
 
-                <SidebarElement icon="countries" route-name="countries.page" title="countries" />
+                <SidebarElement icon="countries" route-name="app.countries.page" title="countries" />
 
-                <SidebarElement icon="currencies" route-name="currencies.page" title="currencies" />
+                <SidebarElement icon="currencies" route-name="app.currencies.page" title="currencies" />
 
-                <SidebarElement icon="timer" route-name="time.page" title="Global Variables" />
-                <SidebarElement icon="money" route-name="commission.page" title="Commission" />
+                <!-- <SidebarElement icon="timer" route-name="time.page" title="Global Variables" /> -->
+                <SidebarElement icon="money" route-name="app.commission.page" title="Commission" />
             </ul>
         </div>
     </aside>

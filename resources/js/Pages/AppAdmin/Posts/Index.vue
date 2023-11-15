@@ -16,9 +16,14 @@ import { useNotificationStore } from "@/stores/notification";
 import EditIcon from "@/Icons/EditIcon.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { request, BASE_URL } from "@/helpers/requestHelper.js";
+import { userUserStore } from "@/stores/user";
 
 const api = useAPI();
 const notification = useNotificationStore();
+const $userStore = userUserStore();
+let token = $userStore.getUserApp
+    ? $userStore.getUserApp?.data?.auth_token
+    : "";
 
 const props = defineProps({
     posts: {
@@ -115,7 +120,9 @@ const deletePost = async (post) => {
     api.startRequest();
 
     try {
-        const res = await axios.delete(`${BASE_URL}/posts/delete/` + post.id)
+        const res = await axios.delete(`${BASE_URL}/posts/delete/` + post.id, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
 
         if (res.data.id || res.data.status === 'success') {
             notification.notify('Post deleted', 'success');
@@ -402,7 +409,8 @@ const getAllReceiver = async (page = '1', limit = '100') => {
                                     {{ post.receiver?.country_code }}
                                 </p>
                                 <p v-if="post.receiver?.id">
-                                    <Link :href="post.receiver?.id ? route('single.receiver.page', post.receiver.id) : ''"
+                                    <Link
+                                        :href="post.receiver?.id ? route('app.single.receiver.page', post.receiver.id) : ''"
                                         class="text-blue-700 hover:text-blue-900 hover:underline">
                                     (View receiver)
                                     </Link>

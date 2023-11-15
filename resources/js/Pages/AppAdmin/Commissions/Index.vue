@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import Edit from "@/Pages/Admin/Commissions/Edit.vue";
-// import Add from "@/Pages/Admin/commission/Add.vue";
+import Edit from "@/Pages/AppAdmin/Commissions/Edit.vue";
+import Add from "@/Pages/AppAdmin/Commissions/Add.vue";
 
 import Pagination from "@/Components/Custom/Pagination.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
@@ -11,8 +11,10 @@ import EditIcon from "@/Icons/EditIcon.vue";
 import { ref, reactive, onMounted } from "vue";
 import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
-
 import TextInput from "@/Components/TextInput.vue";
+import { request, BASE_URL } from "@/helpers/requestHelper.js";
+import { useHelpers } from "@/Composables/useHelpers";
+import { userUserStore } from "@/stores/user";
 
 const api = useAPI();
 const notification = useNotificationStore();
@@ -34,22 +36,45 @@ const props = defineProps({
 // Editing:
 const editingCommission = reactive({});
 var showEditDialog = ref(false);
+var showAddDialog = ref(false);
+
+const allCommission = ref({})
 
 var index = ref()
 const edit = (commission) => {
     editingCommission.value = { ...commission };
-    index.value = props.commissions.data.findIndex(oldInfo => oldInfo.id === editingCommission.value.id);
+    index.value = allCommission.value.data.findIndex(oldInfo => oldInfo.id === editingCommission.value.id);
     console.log(' index.value', index.value);
 
     showEditDialog.value = true;
     Edit;
     return { showEditDialog, Edit };
 }
+const add = () => {
+
+    showAddDialog.value = true;
+    Add;
+    return { showAddDialog, Add };
+}
 function closeEditDialog($isFetchData) {
     console.log('closeEditDialog', $isFetchData);
     if ($isFetchData) {
-        props.commissions.data.splice(index.value, 1, $isFetchData);
+        let tempCommison = allCommission.value.data
+        tempCommison?.splice(index.value, 1, $isFetchData);
         showEditDialog.value = false;
+        index.value = null
+    }
+
+
+    return { showEditDialog };
+}
+function closeAddDialog($isFetchData) {
+    console.log('closeEditDialog', $isFetchData);
+    if ($isFetchData) {
+        let tempCommission = allCommission.value.data
+        tempCommission?.unshift($isFetchData);
+        allCommission.value.data = tempCommission
+        showAddDialog.value = false;
         index.value = null
     }
 
@@ -60,12 +85,49 @@ function closeEditDialog($isFetchData) {
 
 const fetchingcommissions = ref(false);
 
+onMounted(() => {
+
+    getAllCommissions()
+
+
+});
+
+const getAllCommissions = async () => {
+
+    try {
+        let res = await request({ type: 'get', url: `commissions/all` })
+        if (res?.data?.data) {
+            let data = res?.data?.data?.data
+            let col = new URLSearchParams(window.location.search).get('column');
+            let type = new URLSearchParams(window.location.search).get('type');
+            if (col && type) {
+                if (type === 'asc') {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? a[col]?.localeCompare(b[col]) : a[col] - b[col]);
+
+                } else {
+                    data = data?.sort((a, b) => isNaN(a[col]) ? b[col]?.localeCompare(a[col]) : b[col] - a[col]);
+
+                }
+            }
+            console.log({ data });
+            allCommission.value = { ...res?.data?.data, data }
+            return
+        }
+        return
+
+    } catch (error) {
+
+        console.log({ error });
+
+    }
+}
 
 </script>
 
 <template>
     <Edit :show="showEditDialog" :commissionsData="editingCommission" v-if="showEditDialog"
         v-on:close="closeEditDialog($event)" />
+    <Add :show="showAddDialog" v-if="showAddDialog" v-on:close="closeAddDialog($event)" />
 
     <Head title="Commission Settings">
         <title>
@@ -79,13 +141,17 @@ const fetchingcommissions = ref(false);
                 <div>
                     commissions
                 </div>
-                <div class="text-sm">
-                    Page: {{ props.commissions.current_page }}
-                    | total: {{ props.commissions.total }}
-                    | from: {{ props.commissions.from }},
-                    to: {{ props.commissions.to }}
+                <div class="text-sm" v-if="allCommission.page">
+                    Page: {{ allCommission.page }}
+                    | total: {{ allCommission.total }}
+                    | from: {{ allCommission.from }},
+                    to: {{ allCommission.to }}
                 </div>
             </div>
+            <button type="button" @click="add"
+                class="mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Add new commission
+            </button>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -108,7 +174,7 @@ const fetchingcommissions = ref(false);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(commission, key) in props.commissions.data" :key="commission.id"
+                        <tr v-for="(commission, key) in allCommission.data" :key="commission.id"
                             class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                             <td class="px-6 py-4">
                                 {{ key + 1 }}
@@ -138,7 +204,7 @@ const fetchingcommissions = ref(false);
                 </table>
             </div>
 
-            <Pagination :links="props.commissions.links" />
+            <!-- <Pagination :links="props.commissions.links" /> -->
         </div>
 
     </AdminLayout>

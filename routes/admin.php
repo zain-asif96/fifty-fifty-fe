@@ -12,14 +12,14 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CommissionController;
 // app admin routes
 use App\Http\Controllers\MobileApp\Admin\AppAdminController;
-// use App\Http\Controllers\MobileApp\Admin\AppBankController;
-// use App\Http\Controllers\MobileApp\Admin\AppCountriesController;
-// use App\Http\Controllers\MobileApp\Admin\AppCurrencyController;
+use App\Http\Controllers\MobileApp\Admin\AppBankController;
+use App\Http\Controllers\MobileApp\Admin\AppCountriesController;
+use App\Http\Controllers\MobileApp\Admin\AppCurrencyController;
 use App\Http\Controllers\MobileApp\Admin\AppPostController;
 use App\Http\Controllers\MobileApp\Admin\AppReceiverController;
 use App\Http\Controllers\MobileApp\Admin\AppTransactionController;
 use App\Http\Controllers\MobileApp\Admin\AppUsersController;
-// use App\Http\Controllers\MobileApp\Admin\AppCommissionController;
+use App\Http\Controllers\MobileApp\Admin\AppCommissionController;
 
 use App\Http\Controllers\UpdateStatusController;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +62,12 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     Route::put('/admin/banks/update/{bank}', [BankController::class, 'update'])->name('banks.update');
     Route::delete('/admin/banks/delete/{bank}', [BankController::class, 'delete'])->name('banks.delete');
 
+    // app banks
+    Route::get('/app/admin/banks', [AppBankController::class, 'index'])->name('app.banks.page');
+    Route::post('/app/admin/banks/store', [AppBankController::class, 'store'])->name('app.banks.store');
+    Route::put('/app/admin/banks/update/{bank}', [AppBankController::class, 'update'])->name('app.banks.update');
+    Route::delete('/app/admin/banks/delete/{bank}', [AppBankController::class, 'delete'])->name('app.banks.delete');
+
     // currencies
     Route::get('/admin/currencies', [CurrencyController::class, 'currenciesPage'])->name('currencies.page');
     Route::post('/admin/currencies/store', [CurrencyController::class, 'store'])->name('currencies.store');
@@ -69,10 +75,22 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     Route::delete('/admin/currencies/delete/{currency}', [CurrencyController::class, 'delete'])->name('currencies.delete');
     Route::put('/admin/currencies/update-rates', [CurrencyController::class, 'updateRates'])->name('currencies.update.rates');
 
+    // app currencies
+    Route::get('/app/admin/currencies', [AppCurrencyController::class, 'currenciesPage'])->name('app.currencies.page');
+    Route::post('/app/admin/currencies/store', [AppCurrencyController::class, 'store'])->name('app.currencies.store');
+    Route::put('/app/admin/currencies/update/{currency}', [AppCurrencyController::class, 'update'])->name('app.currencies.update');
+    Route::delete('/app/admin/currencies/delete/{currency}', [AppCurrencyController::class, 'delete'])->name('app.currencies.delete');
+    Route::put('/app/admin/currencies/update-rates', [AppCurrencyController::class, 'updateRates'])->name('app.currencies.update.rates');
+
     // countries
     Route::get('/admin/countries', [CountriesController::class, 'countriesPage'])->name('countries.page');
     Route::post('/admin/countries/store', [CountriesController::class, 'store'])->name('countries.store');
     Route::put('/admin/countries/update/{country}', [CountriesController::class, 'update'])->name('countries.update');
+
+    // app countries
+    Route::get('/app/admin/countries', [AppCountriesController::class, 'countriesPage'])->name('app.countries.page');
+    Route::post('/app/admin/countries/store', [AppCountriesController::class, 'store'])->name('app.countries.store');
+    Route::put('/app/admin/countries/update/{country}', [AppCountriesController::class, 'update'])->name('app.countries.update');
 
 
     // users
@@ -96,7 +114,12 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     Route::put('/admin/update-status-time/{updateStatusTime}', [UpdateStatusController::class, 'update'])->name('update.status.update');
 
 
+    // commisions
     Route::get('/admin/commission', [CommissionController::class, 'commissionPage'])->name('commission.page');
     Route::put('/admin/commission/{commission}', [CommissionController::class, 'updateCommission'])->name('commission.update');
+
+    // app commision
+    Route::get('/app/admin/commission', [AppCommissionController::class, 'commissionPage'])->name('app.commission.page');
+    Route::put('/app/admin/commission/{commission}', [AppCommissionController::class, 'updateCommission'])->name('app.commission.update');
 
 });

@@ -200,7 +200,7 @@ const getAllReceiver = async (page = '1', limit = '10') => {
                         <tr v-for="receiver in allReceiver?.data" :key="receiver.id"
                             class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
-                                <Link :href="route('single.receiver.page', receiver.id)"
+                                <Link :href="route('app.single.receiver.page', receiver.id)"
                                     class="text-blue-700 hover:text-blue-900 hover:underline">
                                 {{ receiver.firstname }} {{ receiver.lastname }}
                                 </Link>
