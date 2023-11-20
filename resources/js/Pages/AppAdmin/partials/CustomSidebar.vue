@@ -55,7 +55,7 @@ const toggleSidebar = () => {
 
                 <SidebarElement icon="currencies" route-name="app.currencies.page" title="currencies" />
 
-                <!-- <SidebarElement icon="timer" route-name="time.page" title="Global Variables" /> -->
+                <SidebarElement icon="timer" route-name="app.time.page" title="Global Variables" />
                 <SidebarElement icon="money" route-name="app.commission.page" title="Commission" />
             </ul>
         </div>

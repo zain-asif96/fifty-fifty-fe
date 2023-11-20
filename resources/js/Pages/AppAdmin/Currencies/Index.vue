@@ -268,7 +268,43 @@ const getAllCurrencies = async (page = '1', limit = '10') => {
                 }
             }
             console.log({ dataaaa: data });
-            allCurrency.value = { ...res?.data?.data, data }
+            let links = [];
+
+            let temparray = [...Array(res?.data?.data?.total <= 10 ? res?.data?.data?.total : 10)]
+
+            temparray?.map((item, index) => {
+                if (index == 0) {
+                    links.push({
+                        label: `&laquo; Previous`, active: currentPage.value > 1 ? true : false,
+                        url: currentPage.value != 1 ? `/app/admin/countries?page=${Number(currentPage.value) - 1}` : null
+
+                    })
+                    links.push({
+                        label: `${index + 1}`, active: currentPage.value == index + 1 ? true : false,
+                        url: `/app/admin/countries?page=${index + 1}`
+
+                    })
+                } else if (index > 0) {
+                    links.push({
+                        label: `${index + 1}`, active: currentPage.value == index + 1 ? true : false,
+                        url: `/app/admin/countries?page=${index + 1}`
+
+                    })
+
+                    if (temparray?.length - 1 === index) {
+
+                        links.push({
+                            label: `Next &raquo;`, active: index + 1 === currentPage.value ? false : true,
+                            url: index + 1 == currentPage.value ? null : `/app/admin/countries?page=${Number(currentPage.value) + 1}`
+
+                        })
+                    }
+
+
+                }
+
+            })
+            allCurrency.value = { ...res?.data?.data, data, links }
             return
         }
         return
@@ -426,7 +462,7 @@ const getAllCurrencies = async (page = '1', limit = '10') => {
                 </table>
             </div>
 
-            <!-- <Pagination :links="props.currencies.links" /> -->
+            <!-- <Pagination :links="allCurrency.links" /> -->
         </div>
 
     </AdminLayout>

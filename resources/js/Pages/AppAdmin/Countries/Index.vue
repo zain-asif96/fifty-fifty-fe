@@ -180,7 +180,7 @@ const getAllCountries = async (page = '1', limit = '10') => {
                 if (index == 0) {
                     links.push({
                         label: `&laquo; Previous`, active: currentPage.value > 1 ? true : false,
-                        url: null
+                        url: currentPage.value != 1 ? `/app/admin/countries?page=${Number(currentPage.value) - 1}` : null
 
                     })
                     links.push({
@@ -198,8 +198,9 @@ const getAllCountries = async (page = '1', limit = '10') => {
                     if (temparray?.length - 1 === index) {
 
                         links.push({
-                            label: `Next &raquo;`, active: index + 1 === currentPage.value ? true : false,
-                            url: null
+                            label: `Next &raquo;`, active: index + 1 === currentPage.value ? false : true,
+                            url: index + 1 == currentPage.value ? null : `/app/admin/countries?page=${Number(currentPage.value) + 1}`
+
                         })
                     }
 

@@ -1,12 +1,19 @@
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
 import Modal from "@/Components/Custom/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
+import { BASE_URL } from "@/helpers/requestHelper";
+import { userUserStore } from "@/stores/user";
 
 const notification = useNotificationStore();
 const api = useAPI();
+const $userStore = userUserStore();
+let token = $userStore.getUserApp
+    ? $userStore.getUserApp?.data?.auth_token
+    : "";
+
 // Props:
 const props = defineProps({
     timeData: {
@@ -20,7 +27,7 @@ const props = defineProps({
 })
 const time = reactive({
     // 'model_name': 'App\\Models\\Post',
-    'time': props.timeData.time,
+    'time': props.timeData.value.time,
 })
 const isModalOpened = ref(props.show);
 // const closeModal = () => {
@@ -31,6 +38,8 @@ const openModal = () => {
     if (props.show) return;
     isModalOpened.value = true;
 }
+
+
 
 
 // Emits
@@ -50,7 +59,9 @@ const applyEdit = async () => {
     // console.log('csrfToken', csrfToken);
     try {
         // const res = await axios.put('/admin/currencies/update/' + props.currencyData.value.id, props.currencyData.value)
-        const res = await axios.put('/admin/update-status-time/' + props.timeData.value.id, time)
+        const res = await axios.put(BASE_URL + '/global_variable/update/' + props.timeData.value.id, time, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
 
         if (res.data) {
             notification.notify('Time updated', 'success');

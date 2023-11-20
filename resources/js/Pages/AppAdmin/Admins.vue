@@ -112,10 +112,10 @@ const getAllAdmins = async (page = '1', limit = '10') => {
             let type = new URLSearchParams(window.location.search).get('type');
             if (col && type) {
                 if (type === 'asc') {
-                    data = data?.sort((a, b) => a[col].localeCompare(b[col]));
+                    data = data?.sort((a, b) => isNaN(a[col]) ? a[col]?.localeCompare(b[col]) : a[col] - b[col]);
 
                 } else {
-                    data = data?.sort((a, b) => b[col].localeCompare(a[col]));
+                    data = data?.sort((a, b) => isNaN(a[col]) ? b[col]?.localeCompare(a[col]) : b[col] - a[col]);
 
                 }
             }

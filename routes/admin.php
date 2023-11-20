@@ -21,7 +21,10 @@ use App\Http\Controllers\MobileApp\Admin\AppTransactionController;
 use App\Http\Controllers\MobileApp\Admin\AppUsersController;
 use App\Http\Controllers\MobileApp\Admin\AppCommissionController;
 
+
 use App\Http\Controllers\UpdateStatusController;
+use App\Http\Controllers\AppUpdateStatusController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -109,9 +112,15 @@ Route::middleware(['auth', 'can:access.admin.panel'])->group(function () {
     Route::get('/app/admin/receivers', [AppReceiverController::class, 'receiversPage'])->name('app.receivers.page');
     Route::get('/app/admin/receivers/{receiver}', [AppReceiverController::class, 'singleReceiverPage'])->name('app.single.receiver.page');
 
+    //web globals
     Route::get('/admin/update-status-time', [UpdateStatusController::class, 'index'])->name('time.page');
     Route::post('/admin/update-status-time', [UpdateStatusController::class, 'store'])->name('update.status.store');
     Route::put('/admin/update-status-time/{updateStatusTime}', [UpdateStatusController::class, 'update'])->name('update.status.update');
+
+    //app globals
+    Route::get('/app/admin/update-status-time', [AppUpdateStatusController::class, 'index'])->name('app.time.page');
+    Route::post('/app/admin/update-status-time', [AppUpdateStatusController::class, 'store'])->name('app.update.status.store');
+    Route::put('/app/admin/update-status-time/{updateStatusTime}', [AppUpdateStatusController::class, 'update'])->name('app.update.status.update');
 
 
     // commisions

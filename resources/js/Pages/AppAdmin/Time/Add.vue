@@ -4,7 +4,13 @@ import { useAPI } from "@/Composables/useAPI";
 import { useNotificationStore } from "@/stores/notification";
 import Spinner from "@/Components/Custom/Spinner.vue";
 import TextInput from "@/Components/TextInput.vue";
+import { userUserStore } from "@/stores/user";
+import { BASE_URL } from "@/helpers/requestHelper";
 const api = useAPI();
+const $userStore = userUserStore();
+let token = $userStore.getUserApp
+    ? $userStore.getUserApp?.data?.auth_token
+    : "";
 const notification = useNotificationStore();
 // Emits
 const emit = defineEmits(['timeAdded']);
@@ -21,12 +27,13 @@ const endAdd = () => {
     api.errors.value = {};
     resetTime();
 }
-
+// App\\Models\\Post
 const time = reactive({
-    'model_name': 'App\\Models\\Post',
+    'model_name': '',
     'time': '',
     // 'status': '',
 })
+
 
 
 const resetTime = () => {
@@ -36,14 +43,17 @@ const resetTime = () => {
 const addTime = async () => {
     api.startRequest();
     try {
-        const res = await axios.time('/admin/update-status-time', time)
-        console.log('res',res);
-        if ( res.status === 200) {
+        const res = await axios.post(BASE_URL + '/global_variable/create', time, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        console.log('res', res);
+        if (res.data.status === "CREATED") {
             notification.notify('Time added', 'success');
             endAdd();
             emit('timeAdded', res.data);
         }
     } catch (errors) {
+        console.log({ errors });
         notification.notify('Error', 'error');
         api.handleErrors(errors)
     } finally {
@@ -63,9 +73,19 @@ const addTime = async () => {
 
         <form v-show="formOpened" class="border-gray-400 border rounded-lg p-6 mb-8">
             <div class="grid gap-6 mb-10 md:grid-cols-2">
-                <TextInput v-model="time.time" :errors="api.errors.value?.time"
-                    label="Time (minutes)" placeholder="Time (minutes)" required title="time" class="fifty-form-input" type="number" />
-                    <div>
+                <TextInput v-model="time.model_name" :errors="api.errors.value?.model_name" label="Model name"
+                    placeholder="Model name" required title="model_name" class="fifty-form-input" type="text" />
+                <div>
+                    <!-- <label>Status</label>
+                    <input type="checkbox" :class="time.status ? 'slider-checked' : ''" class="slider"
+                        v-model="time.status" /> -->
+                </div>
+
+            </div>
+            <div class="grid gap-6 mb-10 md:grid-cols-2">
+                <TextInput v-model="time.time" :errors="api.errors.value?.time" label="Time (minutes)"
+                    placeholder="Time (minutes)" required title="time" class="fifty-form-input" type="number" />
+                <div>
                     <!-- <label>Status</label>
                     <input type="checkbox" :class="time.status ? 'slider-checked' : ''" class="slider"
                         v-model="time.status" /> -->
