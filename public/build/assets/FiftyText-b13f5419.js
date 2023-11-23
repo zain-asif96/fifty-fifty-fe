@@ -1,1 +1,0 @@
-import{o as a,c as o,D as r,n as s}from"./app-db97278d.js";const n={name:"FiftyText"},i=Object.assign(n,{props:{variation:{type:String,default:""},color:{type:String,default:"grey"}},setup(t){return(e,c)=>(a(),o("div",{class:s([`${t.variation} ${t.color}`,"basic-text"])},[r(e.$slots,"default")],2))}});export{i as _};

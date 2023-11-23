@@ -1,1 +1,0 @@
-import{B as t}from"./app-db97278d.js";const i=t("sorting",{state:()=>({column:"id",type:"asc",searchValue:"",disableClick:"false"}),actions:{sortValues(s){this.column===s?this.type=this.type==="asc"?"desc":"asc":(this.column=s,this.type="asc")}}});export{i as u};
