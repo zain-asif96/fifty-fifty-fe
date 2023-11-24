@@ -24,16 +24,13 @@ import TransactionBox from "./TransactionBox.vue";
 
         </div>
 
-    <div class="hero-section-image">
-        <img alt="People Picture" src="images/homePage/hero-sec-img.png" />
+        <div class="hero-section-image">
+            <img alt="People Picture" src="images/homePage/hero-sec-img.png" />
         </div>
 
         <div class="box-form-wrap">
-            <!-- <TransactionBox
-                                                            v-if="geoLocationDetails.userCanSend"
-                                                                :receivingCountries="receivingCountries"
-                                                            /> -->
-            <TransactionBox />
+            <TransactionBox v-if="geoLocationDetails.userCanSend" :receivingCountries="receivingCountries" />
+            <!-- <TransactionBox /> -->
         </div>
 
     </div>
