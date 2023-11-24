@@ -3,6 +3,34 @@ import FiftyText from "@/Components/Design/FiftyText.vue";
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
 import Ratings from "@/Components/Design/Ratings.vue";
 import TransactionBox from "./TransactionBox.vue";
+import { usePage } from "@inertiajs/vue3";
+
+
+const props = defineProps({
+    canLogin: Boolean,
+    canRegister: Boolean,
+    receivingCountries: {
+        required: true,
+        default: [],
+        type: Array,
+    },
+    supportedCountries: {
+        required: true,
+        default: [],
+        type: Array,
+    },
+    posts: {
+        type: Array,
+        default: [],
+    },
+    rates: {
+        type: Array,
+        default: [],
+    },
+});
+// Geo Location:
+const geoLocationDetails = usePage().props.geoDetails;
+console.log({ cccc: props?.supportedCountries });
 </script>
 
 <template>

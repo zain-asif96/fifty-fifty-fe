@@ -21,7 +21,7 @@
         padding-bottom: 50px;
         flex: 2;
         @media (max-width: 500px) {
-            flex: auto
+            flex: auto;
         }
     }
 
@@ -36,8 +36,9 @@
 
     .box-form-wrap {
         flex: 2;
-        @media (max-width: 500px) {
+        @media (max-width: 1023px) {
             margin-bottom: 50px;
+            flex: auto;
         }
     }
 }
@@ -84,12 +85,18 @@
     }
 }
 
+@media (max-width: 1023px) {
+    .hero-section-one {
+        flex-direction: column;
+    }
+}
+
 // Tablet and bigger:
 @media (min-width: 760px) {
     .hero-section-one {
         padding-top: 40px;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: wrap;
         align-items: center;
 
         // background-image: url("/public/images/icons/logo/logo-background-new.svg");
