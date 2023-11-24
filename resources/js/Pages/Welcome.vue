@@ -39,11 +39,12 @@ const props = defineProps({
 
 // Geo Location:
 const geoLocationDetails = usePage().props.geoDetails;
-console.log({cccc:props?.supportedCountries});
+console.log({ cccc: props?.supportedCountries });
 </script>
 
 <template>
     <GuestLayout>
+
         <Head>
             <title>Fifty Fifty | Homepage</title>
         </Head>
@@ -55,10 +56,11 @@ console.log({cccc:props?.supportedCountries});
 
             <HeroSectionOne />
 
-            <TransactionBox
-            v-if="geoLocationDetails.userCanSend"
-                :receivingCountries="receivingCountries"
-            />
+            <!-- <TransactionBox
+                v-if="geoLocationDetails.userCanSend"
+                    :receivingCountries="receivingCountries"
+                /> -->
+            <!-- <TransactionBox /> -->
 
             <HeroSectionTwo />
 

@@ -14,7 +14,13 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                inter: ["Inter", "sans-serif"],
             },
+            colors: {
+                'custom-dark-blue':'#000330',
+                'custom-greyish': "#616274",
+                'greyish-100': "#6B7280"
+              }
         },
     },
 

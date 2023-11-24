@@ -62,7 +62,7 @@ defineExpose({focus: () => input.value.focus()});
 
 <template>
     <div class="w-full flex flex-col justify-start relative">
-        <label :for="title" class="w-fit inline-block mb-2">
+        <label :for="title" class="w-fit inline-block mb-2 font-inter text-xs text-custom-greyish">
             <FiftyText>
                 {{ label ?? '' }} <span v-if="required" class="text-red-600">*</span>
             </FiftyText>
@@ -73,13 +73,13 @@ defineExpose({focus: () => input.value.focus()});
             :class="{'border-red-300': errors.length > 0, 'bg-gray-300': disabled}"
             :disabled="disabled"
             :value="modelValue"
-            class="form-control block w-full px-3 py-1.5 text-lg font-normal
-                  text-gray-700  bg-clip-padding border border-solid border-gray-300 rounded transition
+            class="form-control block w-full px-3 py-1.5 font-sans text-sm font-normal
+                  text-greyish-700 bg-clip-padding border border-solid border-gray-300 rounded transition
                   ease-linear m-0
                   focus:text-gray-700 focus:bg-white focus:border-indigo-300 focus:outline-none"
             @change="$emit('update:modelValue', $event.target.value)"
         >
-            <option class="bg-gray-200" disabled value="">--{{ placeholder }}--</option>
+            <option class="bg-gray-200" disabled selected value="">--{{ placeholder }}--</option>
             <option v-for="option in options" :key="option[valueAccessor]" :value="option[valueAccessor]">
                 {{ option[labelAccessor] }}
             </option>

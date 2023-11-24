@@ -48,7 +48,7 @@ export default {
     background: #233375;
     color: white;
 
-    font-family: 'General Sans', serif;
+    font-family: 'Inter', serif;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

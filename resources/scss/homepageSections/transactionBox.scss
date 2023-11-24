@@ -19,8 +19,12 @@
     right: 0;
     margin: -32px 16px 0 16px;
 
+    @media (max-width: 500px) {
+        margin: 0;
+    }
+
     .inputs {
-        margin-top: 24px;
+        // margin-top: 24px;
         display: flex;
         flex-wrap: wrap;
         align-items: self-end;
@@ -54,7 +58,7 @@
         margin: -32px 16px 0 16px;
 
         .inputs {
-            margin-top: 24px;
+            // margin-top: 24px;
             display: flex;
             flex-wrap: wrap;
             align-items: self-end;
@@ -84,7 +88,7 @@
         margin: auto;
 
         .inputs {
-            margin-top: 24px;
+            // margin-top: 24px;
             display: flex;
             flex-wrap: nowrap;
             align-items: self-end;
@@ -102,8 +106,8 @@
         background: #ffffff;
         box-shadow: 0px 4px 120px rgba(0, 0, 0, 0.06);
         border-radius: 40px;
-        // max-width: 50%;
-        max-width: 25%;
+        // // max-width: 50%;
+        // max-width: 25%;
 
 
         display: flex;
@@ -115,11 +119,11 @@
         //position: absolute;
         //left: 0;
         //right: 0;
-        margin: -300px 20px 50px auto;
+        // margin: -300px 20px 50px auto;
         //transform: translateY(-35%);
 
         .inputs {
-            margin-top: 24px;
+            // margin-top: 24px;
             display: flex;
             flex-wrap: nowrap;
             flex-direction: column;
@@ -127,7 +131,7 @@
             gap: 16px;
             flex-direction: row;
             flex-wrap: wrap;
-            padding: 18px
+            padding: 18px 18px 0
         }
 
         .custom-action-btn {

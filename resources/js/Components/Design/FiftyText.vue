@@ -15,7 +15,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div :class="`${variation} ${color}`" class="basic-text">
+    <div :class="`${variation} ${color}`">
         <slot/>
     </div>
 </template>

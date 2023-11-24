@@ -65,7 +65,7 @@ defineExpose({focus: () => input.value.focus()});
 
 <template>
     <div class="w-full flex flex-col justify-start relative">
-        <label :for="title" class="w-fit inline-block mb-2">
+        <label :for="title" class="w-fit inline-block mb-2 font-inter text-xs text-custom-greyish">
             <FiftyText>
                 {{ label ?? '' }} <span v-if="required" class="text-red-600">*</span>
             </FiftyText>
@@ -80,8 +80,8 @@ defineExpose({focus: () => input.value.focus()});
             :max="max"
             :min="min"
             :value="modelValue"
-            class="form-control block w-full text-lg font-normal
-                  text-gray-700 bg-clip-padding border border-solid transition
+            class="form-control block w-full font-sans text-sm font-normal
+                  text-greyish-700 bg-clip-padding border border-solid transition
                   ease-linear m-0
                   focus:text-gray-700 focus:bg-white focus:border-indigo-300 focus:outline-none"
             @input="$emit('update:modelValue', $event.target.value)"
