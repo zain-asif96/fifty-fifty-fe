@@ -74,6 +74,7 @@
 
             .body-text {
                 margin-top: 32px;
+
             }
 
             .money-action-button {
@@ -103,10 +104,13 @@
             justify-content: center;
             margin-top: 60px;
             background-size: contain;
-            background-position: bottom;
+            // background-position: bottom;
+            background-position: 50% 120px;
 
             .content-container {
-                max-width: 515px;
+                max-width: 565px;
+                // max-width: 450px;
+             
                 // padding-top: 265px;
                 padding-top: 0px;
                 padding-bottom: 76px;
@@ -114,6 +118,11 @@
                 align-items: center;
                 flex-direction: column;
                 justify-content: center;
+            }
+
+            .body-text {
+                margin-top: 250px;
+
             }
         }
     }

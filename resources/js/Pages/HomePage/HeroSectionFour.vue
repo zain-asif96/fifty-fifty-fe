@@ -18,8 +18,9 @@ import NewActionButton from "@/Components/Design/NewActionButton.vue";
             Exchanging money is as easy as 1,2,3,4! Have the best market value
             in your pocket. With no hidden fees, every transaction to your
             friends and family goes further. Check the most up-to-date rates at
-            any time for easy sending. More than 120 countries are soon to be
-            updated.
+            any time for easy sending. With our initial launch on Canada, US and Nigeria, our target is 120 countries within the next 6 months.
+            <!-- More than 120 countries are soon to be
+            updated. -->
         </FiftyText>
 
         <div class="working-steps">

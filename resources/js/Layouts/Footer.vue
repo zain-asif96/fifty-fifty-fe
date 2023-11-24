@@ -38,7 +38,7 @@ const socialLinks = [
     <footer class="fifty-footer">
         <div class="inside-container">
             <div class="main">
-                <img alt="Fifty Fifty Logo" src="images/icons/logo/fifty_fifty_logo_updated.svg" class="logo-img">
+                <img alt="Fifty Fifty Logo" src="images/icons/logo/fifty_fifty_logo.svg" class="logo-img">
 
                 <div class="footer-nav-items">
                     <div v-for="item in navItems" :key="item.title" class="nav-item">

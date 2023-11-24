@@ -112,6 +112,30 @@
                     font-size: 16px;
                     color: #616274;
                     letter-spacing: 0.5px;
+                        .action-button {
+                        
+                            color: #233375;
+                        
+                            font-family: 'General Sans', serif;
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 16px;
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+
+
+                            // border: 1px solid #233375;
+                            white-space: nowrap;
+                            transition: all 0.3s ease-in-out;
+                        
+                            &:hover {
+                                background: #233375;
+                                color: #fff;
+                                border: 1px solid #233375;
+                            }
+                          
+                    }
                 }
             }
         }

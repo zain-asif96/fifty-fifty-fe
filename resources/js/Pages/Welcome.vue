@@ -39,6 +39,7 @@ const props = defineProps({
 
 // Geo Location:
 const geoLocationDetails = usePage().props.geoDetails;
+console.log({cccc:props?.supportedCountries});
 </script>
 
 <template>
@@ -55,7 +56,7 @@ const geoLocationDetails = usePage().props.geoDetails;
             <HeroSectionOne />
 
             <TransactionBox
-                v-if="geoLocationDetails.userCanSend"
+            v-if="geoLocationDetails.userCanSend"
                 :receivingCountries="receivingCountries"
             />
 

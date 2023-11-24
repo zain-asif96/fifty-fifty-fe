@@ -21,7 +21,7 @@ let toggleMenu = () => {
             <a class="logo" href="/">
                 <img
                     alt="Fifty Fifty Logo"
-                    src="images/icons/logo/fifty_fifty_logo_updated.svg"
+                    src="images/icons/logo/fifty_fifty_logo.svg"
                     class="logo-img"
                 />
             </a>
@@ -35,7 +35,7 @@ let toggleMenu = () => {
                 <a href="/" class="logo">
                     <img
                         alt="Fifty Fifty Logo"
-                        src="images/icons/logo/fifty_fifty_logo_updated.svg"
+                        src="images/icons/logo/fifty_fifty_logo.svg"
                         class="logo-img"
                     />
                 </a>
@@ -57,8 +57,10 @@ let toggleMenu = () => {
                 <NewActionButton
                     :url="route('user.info.page')"
                     class="w-fit"
-                    title="Start Posting"
-                />
+                    title="Start currency swap"
+
+                    />
+                    <!-- title="Start Posting" -->
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 import FiftyText from "@/Components/Design/FiftyText.vue";
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
 import Modal from "@/Components/Custom/Modal.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
     supportedCountries: {
@@ -13,6 +13,8 @@ const props = defineProps({
 });
 
 const isModalOpened = ref(false);
+const allSupportedCountries = ref([]);
+
 
 const closeModal = () => {
     isModalOpened.value = false;
@@ -21,18 +23,41 @@ const openModal = (e) => {
     e.preventDefault();
     isModalOpened.value = true;
 };
+onMounted(()=>{
+    if(props.supportedCountries.length){
+        let tempCountries=props.supportedCountries
+        let filterSupported=props.supportedCountries?.filter((spCountry)=>['ng' , 'us' , 'ca'].includes(spCountry?.code_iso_2?.toLowerCase()))
+
+        for (const [i,item] of tempCountries.entries()) {
+                if(['ng' , 'us' , 'ca'].includes(item?.code_iso_2?.toLowerCase())){
+                    tempCountries.splice(i,1)
+                }
+        }
+        for (const [i,item] of filterSupported.entries()) {
+                
+                    tempCountries.unshift(item)
+        }
+        allSupportedCountries.value=tempCountries
+
+
+
+    }
+})
+
 </script>
 
 <template>
     <div class="bg-white">
         <div class="hero-section-six-container inside-container">
             <FiftyText color="dark" variation="heading-2">
-                Exchange money across over 120+ more countries. Coming Soon!
+                <!-- Exchange money across over 120+ more countries. Coming Soon! -->
+                Exchange currencies across Canada, Nigeria and the US. 120+ other countries. Real Soon!
+
             </FiftyText>
 
             <div class="countries">
                 <div
-                    v-for="country in supportedCountries.slice(1, 26)"
+                    v-for="country in allSupportedCountries.slice(0, 25)"
                     :key="country"
                     :class="['country',{'country-show': !['ng' , 'us' , 'ca'].includes(country.code_iso_2.toLowerCase()) }]"
                 >

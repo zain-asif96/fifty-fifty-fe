@@ -19,11 +19,11 @@ import Ratings from "@/Components/Design/Ratings.vue";
                 for all your transactions
             </FiftyText>
 
-            <NewActionButton
+            <!-- <NewActionButton
                 :url="route('track.transaction')"
                 class="mt-8 w-fit"
                 title="Track Transaction"
-            />
+            /> -->
 
             <Ratings />
         </div>

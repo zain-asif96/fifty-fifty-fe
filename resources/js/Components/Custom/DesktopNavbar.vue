@@ -17,9 +17,11 @@ const geoLocationDetails = usePage().props.geoDetails;
             <a :href="route('welcome')" class="logo">
                 <img
                     alt="Fifty Fifty Logo"
-                    src="images/icons/logo/fifty_fifty_logo_updated.svg"
+                    src="images/icons/logo/fifty_fifty_logo.svg"
+                    
                     class="logo-img"
                 />
+                
             </a>
 
             <div class="nav-items">
@@ -28,7 +30,9 @@ const geoLocationDetails = usePage().props.geoDetails;
                     :key="item.title"
                     class="nav-item"
                 >
-                    <a :href="item.url">{{ item.label }}</a>
+                    <a :href="item.url" v-if="item.label!=='Download App'">{{ item.label }}</a>
+                    <a :href="item.url" v-else class="action-button"> {{ item.label }}</a>
+
                 </div>
             </div>
 
@@ -36,8 +40,10 @@ const geoLocationDetails = usePage().props.geoDetails;
                 <NewActionButton
                     v-if="geoLocationDetails.userCanSend"
                     :url="route('user.info.page')"
-                    title="Start Posting"
-                />
+                    title="Start currency swap"
+                    
+                    />
+                    <!-- title="Start Posting" -->
                 <NewActionButton
                     v-else
                     :url="route('available.posts.page')"
