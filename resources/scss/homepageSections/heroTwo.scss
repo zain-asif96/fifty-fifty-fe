@@ -1,4 +1,72 @@
 // Mobile: No Queries
+
+.get-money-section-cont {
+    width: 100%;
+
+    .inner-container {
+        max-width: 515px;
+        padding-top: 80px;
+        padding-bottom: 0;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .inner-cont-bg {
+        width: 100%;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("/public/images/homePage/hero-section-2-updated.png");
+        background-repeat: no-repeat;
+        margin-top: 24px;
+        background-size: contain;
+        background-position: bottom;
+
+        @media (max-width: 1140px) {
+            min-height: 430px;
+        }
+
+        @media (max-width: 980px) {
+            min-height: 340px;
+            background-size: 100%;
+        }
+        @media (max-width: 759px) {
+            min-height: 260px;
+        }
+        @media (max-width: 657px) {
+            min-height: 100%;
+        }
+        @media (max-width: 500px) {
+            background-position: top;
+            display: block;
+        }
+
+        .inner-cont-info {
+            margin-top: 130px;
+            max-width: 535px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+
+            @media (max-width: 1140px) {
+                max-width: 340px;
+            }
+
+            @media (max-width: 980px) {
+                margin-top: 70px;
+            }
+            @media (max-width: 759px) {
+                padding-bottom: 60px;
+            }
+        }
+    }
+}
+
 .hero-section-two-container {
     padding: 0 16px;
     text-align: center;
@@ -74,7 +142,6 @@
 
             .body-text {
                 margin-top: 32px;
-
             }
 
             .money-action-button {
@@ -110,7 +177,7 @@
             .content-container {
                 max-width: 565px;
                 // max-width: 450px;
-             
+
                 // padding-top: 265px;
                 padding-top: 0px;
                 padding-bottom: 76px;
@@ -122,7 +189,6 @@
 
             .body-text {
                 margin-top: 250px;
-
             }
         }
     }
