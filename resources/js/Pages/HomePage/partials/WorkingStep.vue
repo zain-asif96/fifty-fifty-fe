@@ -41,6 +41,17 @@ export default {
     max-width: 300px;
     border: 2px solid #F8F9FE;
     border-radius: 16px;
+    flex: 1;
+
+
+    @media (max-width: 1065px) {
+        flex: auto;
+        max-width: 50%;
+    }
+
+    @media (max-width: 933px) {
+        max-width: 100%;
+    }
 
     .step-number {
         font-family: 'General Sans', serif;

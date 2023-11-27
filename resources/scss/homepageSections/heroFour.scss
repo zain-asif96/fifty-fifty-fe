@@ -14,12 +14,15 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 30px;
+
+        @media (max-width: 933px) {
+            flex-direction: column;
+        }
     }
 }
 
 // Tablet and bigger:
 @media (min-width: 760px) {
-    
 }
 
 // laptop and bigger:
@@ -41,4 +44,3 @@
         }
     }
 }
-
