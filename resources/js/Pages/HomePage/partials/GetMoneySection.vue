@@ -27,6 +27,8 @@ import NewActionButton from "@/Components/Design/NewActionButton.vue";
                 </div>
             </div>
 
+            <div class="inner-cont-resp"></div>
+
         </div>
     </div>
 </template>

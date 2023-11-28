@@ -3,6 +3,23 @@
 .get-money-section-cont {
     width: 100%;
 
+    .inner-cont-resp {
+        display: none;
+
+        @media (max-width: 759px) {
+            width: 100%;
+            min-height: 330px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("/public/images/homePage/hero-section-2-updated.png");
+            background-repeat: no-repeat;
+            margin-top: 24px;
+            background-size: cover;
+            background-position: bottom;
+        }
+    }
+
     .inner-container {
         max-width: 515px;
         padding-top: 80px;
@@ -35,11 +52,9 @@
             background-size: cover;
         }
         @media (max-width: 759px) {
-            min-height: 260px;
-        }
-        @media (max-width: 657px) {
-            min-height: 100%;
+            background-image: none;
             display: block;
+            min-height: 100%;
         }
 
         .inner-cont-info {
@@ -58,10 +73,7 @@
                 margin-top: 70px;
             }
             @media (max-width: 759px) {
-                padding-bottom: 60px;
-            }
-            @media (max-width: 657px) {
-                margin: 24px auto 0;
+                margin: 0 auto;
                 max-width: 80%;
             }
         }
