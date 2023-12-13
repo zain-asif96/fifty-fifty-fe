@@ -35,9 +35,9 @@ const transactionUpdated = (transaction) => {
 
 
 // Used data:
-const receiverName = props.transaction.receiver?.first_name;
-const receiverCountry = helpers.getCountryLabelByCode(props.transaction.receiver.country) + `(${props.transaction.receiver.country})`;
-const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction.payment_intent.amount_in_receiver_currency) + ` (${currencies_countries[props.transaction.receiver.country]})`
+const receiverName = props.transaction?.receiver?.first_name;
+const receiverCountry = helpers.getCountryLabelByCode(props.transaction?.receiver?.country) + `(${props.transaction?.receiver?.country})`;
+const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.payment_intent?.amount_in_receiver_currency) + ` (${currencies_countries[props.transaction?.receiver?.country]})`
 
 </script>
 
@@ -46,9 +46,9 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
         <ol class="relative border-l border-grey-200">
             <!-- 1- Transaction initialized -->
             <initialized :transaction="transaction">
-                A hold of {{ helpers.amountHumanReadableWithCurrency(transaction.payment_intent.amount) }}
+                A hold of {{ helpers.amountHumanReadableWithCurrency(transaction?.payment_intent?.amount) }}
                 <span class="uppercase">
-                    ({{ transaction.payment_intent.currency }})
+                    ({{ transaction?.payment_intent?.currency }})
                 </span>
                 has been placed on your card and will be refunded once the transaction is complete.
             </initialized>
@@ -62,11 +62,11 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
 
             <!-- 3- Transaction Pairing complete -->
             <PairingComplete
-                :is-hidden="transactionStatuses[transaction.status] < 3"
+                :is-hidden="transactionStatuses[transaction?.status] < 3"
                 :transaction="transaction"
             >
 
-                <b>{{ transaction.opposite_transaction?.user?.first_name }}</b> in
+                <b>{{ transaction?.opposite_transaction?.user?.first_name }}</b> in
                 <b>{{ receiverCountry }} </b>
                 has accepted your Money Order and now paying
                 <b> {{ amountInReceiverCurrency }} </b>
@@ -79,7 +79,7 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
 
             <!-- 5- Transaction Payment to receiver complete -->
             <PaymentToReceiverCompleted
-                :is-hidden="transactionStatuses[transaction.status] < 5"
+                :is-hidden="transactionStatuses[transaction?.status] < 5"
                 :transaction="transaction"
                 @transactionUpdated="transactionUpdated"
             >
@@ -93,8 +93,8 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
             <!-- 6- Transaction Payment to receiver confirmed -->
 
             <TransactionStage
-                :date="transaction.payment_to_receiver_confirmed_at"
-                :is-hidden="transactionStatuses[transaction.status] < 6"
+                :date="transaction?.payment_to_receiver_confirmed_at"
+                :is-hidden="transactionStatuses[transaction?.status] < 6"
                 text=""
                 title="Payment Confirmed"
             >
@@ -102,20 +102,20 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
             </TransactionStage>
 
             <!-- 7- OPPOSITE_PAYMENT_TO_RECEIVER_PENDING (we ask for payment) -->
-            <PaymentToOppositeReceiverPending :is-hidden="transactionStatuses[transaction.status] < 6"
+            <PaymentToOppositeReceiverPending :is-hidden="transactionStatuses[transaction?.status] < 6"
                                               :transaction="transaction"/>
 
             <!-- 8- OPPOSITE_PAYMENT_TO_RECEIVER_COMPLETE -->
 
             <!-- 9- OPPOSITE_PAYMENT_TO_RECEIVER_CONFIRMED -->
-            <PaymentToOppositeReceiverConfirmed :is-hidden="transactionStatuses[transaction.status] < 9"
+            <PaymentToOppositeReceiverConfirmed :is-hidden="transactionStatuses[transaction?.status] < 9"
                                                 :transaction="transaction"
             />
 
 
             <!-- 10- TRANSACTION_COMPLETED -->
             <TransactionCompleted
-                :is-hidden="transactionStatuses[transaction.status] < 10"
+                :is-hidden="transactionStatuses[transaction?.status] < 10"
                 :transaction="transaction"
             />
 

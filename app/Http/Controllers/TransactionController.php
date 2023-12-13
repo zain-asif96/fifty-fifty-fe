@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\Response as FoundationResponse;
+use Illuminate\Support\Facades\Http;
+
 
 class TransactionController extends Controller
 {
@@ -37,17 +39,55 @@ class TransactionController extends Controller
             ->where('id', $request->transaction)
             ->first();
 
+        $response = "";
+
         if (isset($request->transaction) && !$transaction) {
-            request()
-                ->session()
-                ->flash('message', [
-                    'content' => 'Transaction not found!',
-                    'type' => 'error',
-                ]);
+
+            $response = Http::withHeaders([
+            ])->get('http://localhost:3000/transactions/track/' . $request->transaction);
+            // $response = Http::get('https://fifty-backend-production.up.railway.app/transaction/track/'. $request->transaction);
+            $response = $response->json();
+
+            $response = $response['data'];
+            if (!empty($response)) {
+                $response['type'] = "direct";
+                $response['user'] = json_decode('{
+                        "first_name": "' . $response["receiver_firstname"] . '"
+                    }', true);
+                $response['receiver'] = json_decode('{
+                        "first_name": "' . $response["sender_firstname"] . '",
+                        "country": "' . $response["receiver_country"] . '",
+                        "currency": "' . $response["receiver_currency"] . '"
+
+                    }', true);
+                $response['payment_intent'] = json_decode('{
+                        "id": 10,
+                        "user_id": "7",
+                        "receiver_id": "6",
+                        "stripe_payment_intent_id": "633957",
+                        "status": "available",
+                        "amount":"' . $response["receiver_amount"] . '",
+                        "amount_in_receiver_currency": "' . $response["receiver_amount"] . '",
+                        "currency": "HARDCODED",
+                        "payment_proof": null,
+                        "created_at": "Sep 27, 2023",
+                        "updated_at": "2023-09-27T02:17:58.000000Z"
+                    }', true);
+
+                $transaction = $response;
+            } else {
+                request()
+                    ->session()
+                    ->flash('message', [
+                        'content' => 'Transaction not found!',
+                        'type' => 'error',
+                    ]);
+            }
         }
 
         return Inertia::render('Transaction/TimeLine', [
             'transaction' => $transaction,
+            'app_response' => $response
         ]);
     }
 

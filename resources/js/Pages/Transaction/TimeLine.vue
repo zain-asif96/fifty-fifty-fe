@@ -1,22 +1,26 @@
 <script setup>
-import {Head, router} from '@inertiajs/vue3';
-import {onMounted, reactive, ref} from "vue";
+import { Head, router } from '@inertiajs/vue3';
+import { onMounted, reactive, ref } from "vue";
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
 import NewTextInput from "@/Components/Design/NewTextInput.vue";
 import DirectTransactionStages from "@/Pages/Transaction/Partials/TimeLine/DirectTransactionStages.vue";
 import OppositeTransactionStages from "@/Pages/Transaction/Partials/TimeLine/OppositeTransactionStages.vue";
-import {useNotificationStore} from "@/stores/notification";
+import { useNotificationStore } from "@/stores/notification";
 import FiftyText from "@/Components/Design/FiftyText.vue";
 
 const props = defineProps({
     transaction: {
         default: null,
         type: Object
+    },
+    app_response: {
+        default: null,
+        type: Object
     }
 })
 
-console.log(props.transaction);
+console.log(props.transaction, props.app_response);
 
 const notification = useNotificationStore()
 
@@ -50,6 +54,7 @@ onMounted(() => {
 
 <template>
     <GuestLayout>
+
         <Head title="Fifty-Fifty | Send Money">
             <title>
                 Fifty-Fifty | Transaction
@@ -70,32 +75,18 @@ onMounted(() => {
                         <span>{{ transaction.id }}</span>
                     </div>
 
-                    <DirectTransactionStages
-                        v-if="transaction.type === 'direct'"
-                        :transaction="currentTransaction.value"
-                        @transactionUpdated="updateTransaction"
-                    />
+                    <DirectTransactionStages v-if="transaction.type === 'direct'" :transaction="currentTransaction.value"
+                        @transactionUpdated="updateTransaction" />
 
-                    <OppositeTransactionStages
-                        v-else :transaction="currentTransaction.value"
-                        @transactionUpdated="updateTransaction"
-                    />
+                    <OppositeTransactionStages v-else :transaction="currentTransaction.value"
+                        @transactionUpdated="updateTransaction" />
                 </div>
 
                 <div v-else class="track-form-wrapper">
-                    <NewTextInput
-                        v-model="transactionId"
-                        label="Transaction Number"
-                        placeholder="Transaction Number (12 chars)"
-                        required
-                        title="transactionId"
-                    />
+                    <NewTextInput v-model="transactionId" label="Transaction Number"
+                        placeholder="Transaction Number (12 chars)" required title="transactionId" />
 
-                    <NewActionButton
-                        @click="findTransaction"
-                        title="Track"
-                        class="track-form-action-button"
-                    />
+                    <NewActionButton @click="findTransaction" title="Track" class="track-form-action-button" />
 
                 </div>
             </div>
