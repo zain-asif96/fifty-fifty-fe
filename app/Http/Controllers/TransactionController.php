@@ -42,37 +42,38 @@ class TransactionController extends Controller
         $response = "";
 
         if (isset($request->transaction) && !$transaction) {
-
+            $url = "https://appiosandbackend-production.up.railway.app/transactions/track/$request->transaction";
+            // dump($url);
             $response = Http::withHeaders([
-            ])->get('http://localhost:3000/transactions/track/' . $request->transaction);
+            ])->get($url);
             // $response = Http::get('https://fifty-backend-production.up.railway.app/transaction/track/'. $request->transaction);
             $response = $response->json();
-
+                // dd($response);
             $response = $response['data'];
             if (!empty($response)) {
-                $response['type'] = "direct";
-                $response['user'] = json_decode('{
-                        "first_name": "' . $response["receiver_firstname"] . '"
-                    }', true);
-                $response['receiver'] = json_decode('{
-                        "first_name": "' . $response["sender_firstname"] . '",
-                        "country": "' . $response["receiver_country"] . '",
-                        "currency": "' . $response["receiver_currency"] . '"
+                // $response['type'] = "direct";
+                // $response['user'] = json_decode('{
+                //         "first_name": "' . $response["receiver_firstname"] . '"
+                //     }', true);
+                // $response['receiver'] = json_decode('{
+                //         "first_name": "' . $response["sender_firstname"] . '",
+                //         "country": "' . $response["receiver_country"] . '",
+                //         "currency": "' . $response["receiver_currency"] . '"
 
-                    }', true);
-                $response['payment_intent'] = json_decode('{
-                        "id": 10,
-                        "user_id": "7",
-                        "receiver_id": "6",
-                        "stripe_payment_intent_id": "633957",
-                        "status": "available",
-                        "amount":"' . $response["receiver_amount"] . '",
-                        "amount_in_receiver_currency": "' . $response["receiver_amount"] . '",
-                        "currency": "HARDCODED",
-                        "payment_proof": null,
-                        "created_at": "Sep 27, 2023",
-                        "updated_at": "2023-09-27T02:17:58.000000Z"
-                    }', true);
+                //     }', true);
+                // $response['payment_intent'] = json_decode('{
+                //         "id": 10,
+                //         "user_id": "7",
+                //         "receiver_id": "6",
+                //         "stripe_payment_intent_id": "633957",
+                //         "status": "available",
+                //         "amount":"' . $response["receiver_amount"] . '",
+                //         "amount_in_receiver_currency": "' . $response["receiver_amount"] . '",
+                //         "currency": "HARDCODED",
+                //         "payment_proof": null,
+                //         "created_at": "Sep 27, 2023",
+                //         "updated_at": "2023-09-27T02:17:58.000000Z"
+                //     }', true);
 
                 $transaction = $response;
             } else {

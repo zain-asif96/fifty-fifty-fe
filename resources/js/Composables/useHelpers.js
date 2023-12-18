@@ -18,6 +18,14 @@ export const useHelpers = () => {
         return country?.label || "";
     };
 
+    const getCodeLabelByCountry = (code) => {
+        const country = countries.find((countryObject) => {
+            return countryObject.label === code;
+        });
+
+        return country?.value || "";
+    };
+
     const getAllCountriesAdmin = async (page = "1", limit = "20") => {
         // let query = "";
         // if (page) {
@@ -52,5 +60,6 @@ export const useHelpers = () => {
         getCountryLabelByCode,
         amountHumanReadableWithCurrency,
         getAllCountriesAdmin,
+        getCodeLabelByCountry,
     };
 };

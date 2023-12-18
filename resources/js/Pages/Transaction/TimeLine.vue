@@ -4,6 +4,7 @@ import { onMounted, reactive, ref } from "vue";
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
 import NewTextInput from "@/Components/Design/NewTextInput.vue";
+import AppResponse from "@/Pages/Transaction/Partials/TimeLine/AppResponse.vue";
 import DirectTransactionStages from "@/Pages/Transaction/Partials/TimeLine/DirectTransactionStages.vue";
 import OppositeTransactionStages from "@/Pages/Transaction/Partials/TimeLine/OppositeTransactionStages.vue";
 import { useNotificationStore } from "@/stores/notification";
@@ -50,6 +51,9 @@ onMounted(() => {
 })
 
 
+console.log(currentTransaction,"currentTransaction")
+
+
 </script>
 
 <template>
@@ -60,22 +64,24 @@ onMounted(() => {
                 Fifty-Fifty | Transaction
             </title>
         </Head>
+        
 
         <div class="timeline-wrapper">
             <div class="timeline relative">
                 <div class="track-steps-wrapper" v-if="currentTransaction.value">
                     <FiftyText variation="heading-3">
-                        {{ transaction.user?.first_name }}, your money is on its way
+                        {{ transaction.sender_firstname || transaction.user?.first_name || ""}}, your money is on its way
                     </FiftyText>
-
+                    
                     <div class="transaction-info">
                         <FiftyText>
                             Transaction #:
                         </FiftyText>
-                        <span>{{ transaction.id }}</span>
-                    </div>
+                    <span>{{ transaction.transaction_id || transaction.id}}</span>
 
-                    <DirectTransactionStages v-if="transaction.type === 'direct'" :transaction="currentTransaction.value"
+                    </div>
+                    <AppResponse v-if="transaction.transaction_id !== ''" :transaction="currentTransaction.value" />
+                    <DirectTransactionStages v-else-if="transaction.type === 'direct'" :transaction="currentTransaction.value"
                         @transactionUpdated="updateTransaction" />
 
                     <OppositeTransactionStages v-else :transaction="currentTransaction.value"
