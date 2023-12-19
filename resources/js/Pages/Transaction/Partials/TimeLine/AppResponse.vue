@@ -40,7 +40,7 @@ const receiverCountry = props.transaction?.receiver_country + `(${helpers.getCod
 const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.receiver_amount) + ` (${props.transaction?.receiver_currency})`
 
 
-console.log(props.transaction,"hello")
+console.log(props.transaction,"app response")
 
 
 </script>
@@ -76,7 +76,7 @@ console.log(props.transaction,"hello")
                 :transaction="transaction"
             >
 
-                <!-- <b>{{ receiverName }}</b>  -->
+                <b>{{ receiverName }}</b> 
                 in
                 <b>{{ receiverCountry }} </b>
                 has accepted your Money Order and now paying

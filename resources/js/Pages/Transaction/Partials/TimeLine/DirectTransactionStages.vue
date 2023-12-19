@@ -39,6 +39,10 @@ const receiverName = props.transaction?.receiver?.first_name;
 const receiverCountry = helpers.getCountryLabelByCode(props.transaction?.receiver?.country) + `(${props.transaction?.receiver?.country})`;
 const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.payment_intent?.amount_in_receiver_currency) + ` (${currencies_countries[props.transaction?.receiver?.country]})`
 
+
+console.log(props.transaction,"web response")
+
+
 </script>
 
 <template>

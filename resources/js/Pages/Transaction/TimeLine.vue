@@ -80,7 +80,7 @@ console.log(currentTransaction,"currentTransaction")
                     <span>{{ transaction.transaction_id || transaction.id}}</span>
 
                     </div>
-                    <AppResponse v-if="transaction.transaction_id !== ''" :transaction="currentTransaction.value" />
+                    <AppResponse v-if="transaction.transaction_id" :transaction="currentTransaction.value" />
                     <DirectTransactionStages v-else-if="transaction.type === 'direct'" :transaction="currentTransaction.value"
                         @transactionUpdated="updateTransaction" />
 
