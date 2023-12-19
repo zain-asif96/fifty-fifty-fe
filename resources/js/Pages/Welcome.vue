@@ -44,7 +44,6 @@ console.log({ cccc: props?.supportedCountries });
 
 <template>
     <GuestLayout>
-
         <Head>
             <title>Fifty Fifty | Homepage</title>
         </Head>
@@ -80,3 +79,40 @@ console.log({ cccc: props?.supportedCountries });
         </div>
     </GuestLayout>
 </template>
+<script>
+export default {
+    created() {
+        const currentUrl = window.location.href;
+        // Check if the current URL matches the pattern
+        if (currentUrl.includes("?app=download")) {
+            // Extract the value of the 'app' query parameter
+            const url = new URL(currentUrl);
+            const appQueryParam = url.searchParams.get("app");
+            // Perform redirection based on the platform
+            this.redirectToAppStore(appQueryParam);
+        }
+    },
+    methods: {
+        redirectToAppStore(appName) {
+            // Replace the condition with the actual app names and corresponding app store URLs
+            if (appName === "download") {
+                // Redirect to the respective app store based on the user's device
+                const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isAndroid = /Android/.test(navigator.userAgent);
+                if (isiOS) {
+                    window.location.href =
+                        "https://apps.apple.com/us/app/uber-request-a-ride/id368677368";
+                } else if (isAndroid) {
+                    // Adjust the Android package name and URL
+                    window.location.href =
+                        "https://play.google.com/store/apps/details?id=com.ubercab";
+                } else {
+                    // Handle other platforms or provide a generic message
+                    window.location.href =
+                        "https://test.fiftyfifty.io/#download";
+                }
+            }
+        },
+    },
+};
+</script>

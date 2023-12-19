@@ -13,7 +13,10 @@ const props = defineProps({
         class="hero-section-seven-container inside-container"
     >
         <div class="image-side">
-            <img alt="home page" src="images/homePage/herosection3_updated.png" />
+            <img
+                alt="home page"
+                src="images/homePage/herosection3_updated.png"
+            />
         </div>
 
         <div class="flex flex-col info">
@@ -26,17 +29,22 @@ const props = defineProps({
                 rates, enjoy faster repeat transfers with a few taps, and find
                 the closest payout and send locations from anywhere.
             </FiftyText>
-
-            <div class="apps-icons">
+            <div class="app-links-wrapper">
                 <img
-                    alt="Google Icon"
-                    class="google"
-                    src="images/icons/apps/google-play-badge.png"
+                    src="images/appQR.svg"
+                    style="height: 130px; width: 130px"
                 />
-                <img
-                    alt="Apple Store"
-                    src="images/icons/apps/apple-store.svg"
-                />
+                <div class="apps-icons">
+                    <img
+                        alt="Google Icon"
+                        class="google"
+                        src="images/icons/apps/google-play-badge.png"
+                    />
+                    <img
+                        alt="Apple Store"
+                        src="images/icons/apps/apple-store.svg"
+                    />
+                </div>
             </div>
         </div>
     </div>

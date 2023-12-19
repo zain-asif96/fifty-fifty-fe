@@ -8,7 +8,9 @@
     background-position: 12px 40px;
     background-size: 95%;
     padding: 0;
-
+    .image-side {
+        display: flex;
+    }
     &.reverse-section {
         flex-direction: column-reverse;
         align-items: center;
@@ -25,20 +27,33 @@
         max-width: 590px;
         margin-top: 40px;
     }
-
-    .apps-icons {
+    .app-links-wrapper {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
 
-        img {
-            height: 40px;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        gap: 20px;
+        align-items: flex-end;
+        .apps-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
 
-            &.google {
-                height: 39px;
+            img {
+                height: 40px;
+
+                &.google {
+                    height: 39px;
+                }
             }
         }
+    }
+}
+@media (max-width: 1202px) {
+    .app-links-wrapper {
+        flex-direction: column;
+        align-items: center !important;
     }
 }
 
@@ -91,13 +106,14 @@
             max-width: 590px;
             margin-top: 80px;
         }
-
-        .apps-icons {
-            img {
-                height: 40px;
-                cursor: pointer;
-                &.google {
-                    height: 39px;
+        .app-links-wrapper {
+            .apps-icons {
+                img {
+                    height: 40px;
+                    cursor: pointer;
+                    &.google {
+                        height: 39px;
+                    }
                 }
             }
         }
