@@ -35,24 +35,30 @@ const transactionUpdated = (transaction) => {
 
 
 // Used data:
-const receiverName = props.transaction?.receiver?.first_name;
-const receiverCountry = helpers.getCountryLabelByCode(props.transaction?.receiver?.country) + `(${props.transaction?.receiver?.country})`;
-const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.payment_intent?.amount_in_receiver_currency) + ` (${currencies_countries[props.transaction?.receiver?.country]})`
+const receiverName = props.transaction?.receiver_firstname;
+const receiverCountry = props.transaction?.receiver_country + `(${helpers.getCodeLabelByCountry(props.transaction?.receiver_country)})`;
+const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.receiver_amount) + ` (${props.transaction?.receiver_currency})`
 
 
-console.log(props.transaction,"web response")
+console.log(props.transaction,"app response")
 
 
 </script>
 
+
+<!-- app = E718885426  -->
+
+
+<!-- web E24981F1A3FD -->
+
 <template>
-    <div class="transaction-stages-wrapper">
+     <div class="transaction-stages-wrapper">
         <ol class="relative border-l border-grey-200">
             <!-- 1- Transaction initialized -->
             <initialized :transaction="transaction">
-                A hold of {{ helpers.amountHumanReadableWithCurrency(transaction?.payment_intent?.amount) }}
+                A hold of {{ (transaction?.sender_amount) }}
                 <span class="uppercase">
-                    ({{ transaction?.payment_intent?.currency }})
+                    ({{ transaction?.sender_currency }})
                 </span>
                 has been placed on your card and will be refunded once the transaction is complete.
             </initialized>
@@ -70,7 +76,8 @@ console.log(props.transaction,"web response")
                 :transaction="transaction"
             >
 
-                <b>{{ transaction?.opposite_transaction?.user?.first_name }}</b> in
+                <b>{{ receiverName }}</b> 
+                in
                 <b>{{ receiverCountry }} </b>
                 has accepted your Money Order and now paying
                 <b> {{ amountInReceiverCurrency }} </b>
@@ -129,6 +136,6 @@ console.log(props.transaction,"web response")
 
 <script>
 export default {
-    name: 'DirectTransactionStages'
+    name: 'AppResponse'
 }
 </script>

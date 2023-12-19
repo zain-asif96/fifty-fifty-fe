@@ -24,9 +24,9 @@ const api = useAPI();
 const notification = useNotificationStore();
 const helpers = useHelpers()
 
-const paymentProofUploaded = ref(props.transaction.payment_intent.payment_proof)
-const readyToUpload = ref(props.transaction.payment_intent.payment_proof)
-const uploadPreviewSrc = ref(props.transaction.payment_intent.payment_proof)
+const paymentProofUploaded = ref(props.transaction?.payment_intent?.payment_proof)
+const readyToUpload = ref(props.transaction?.payment_intent?.payment_proof)
+const uploadPreviewSrc = ref(props.transaction?.payment_intent?.payment_proof)
 let paymentProofFile = null
 
 const uploadFile = async () => {

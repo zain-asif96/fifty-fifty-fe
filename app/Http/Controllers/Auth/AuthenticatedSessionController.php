@@ -37,6 +37,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $response = Http::withHeaders([
+            'ngrok-skip-browser-warning'=> '1'
         ])->post('https://fifty-backend-production.up.railway.app/user-auth/login', [
                     'email' => 'admin@gmail.com',
                     'password' => '123456',
