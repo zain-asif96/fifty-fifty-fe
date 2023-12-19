@@ -17,7 +17,7 @@ const props = defineProps({
 })
 
 const proofUploaded = (transaction) => {
-    router.get('/track-transaction?transaction=' + transaction.id)
+    router.get('/tt?t=' + transaction.id)
 }
 
 // Amount to be sent:

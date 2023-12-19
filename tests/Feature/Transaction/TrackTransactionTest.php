@@ -17,7 +17,7 @@ class TrackTransactionTest extends TestCase
      */
     public function test_user_can_view_track_transaction_page()
     {
-        $response = $this->get('/track-transaction');
+        $response = $this->get('/tt');
 
         $response->assertStatus(200);
     }
@@ -26,7 +26,7 @@ class TrackTransactionTest extends TestCase
     {
         $transaction = Transaction::factory()->create();
 
-        $response = $this->get('/track-transaction?transaction=' . $transaction->id);
+        $response = $this->get('/tt?t=' . $transaction->id);
 
         $response->assertStatus(200)
             ->assertSee($transaction->id);
@@ -34,7 +34,7 @@ class TrackTransactionTest extends TestCase
 
     public function test_user_can_not_access_track_page_with_invalid_trans_id()
     {
-        $response = $this->get('/track-transaction?transaction=123456');
+        $response = $this->get('/tt?t=123456');
 
         $response->assertSessionHas('message.type', 'error');
         $response->assertSessionHas('message.content', 'Transaction not found!');

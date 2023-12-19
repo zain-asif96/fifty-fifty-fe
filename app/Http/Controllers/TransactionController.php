@@ -36,13 +36,13 @@ class TransactionController extends Controller
     public function trackTransactionPage(Request $request): Response
     {
         $transaction = Transaction::with('oppositeTransaction.user', 'user:id,first_name')
-            ->where('id', $request->transaction)
+            ->where('id', $request->t)
             ->first();
 
         $response = "";
 
-        if (isset($request->transaction) && !$transaction) {
-            $url = "https://appiosandbackend-production.up.railway.app/transactions/track/$request->transaction";
+        if (isset($request->t) && !$transaction) {
+            $url = "https://appiosandbackend-production.up.railway.app/transactions/track/$request->t";
             // dump($url);
             $response = Http::withHeaders([
             ])->get($url);

@@ -104,7 +104,7 @@ Route::prefix('api')->group(function () {
 });
 
 // Transactions:
-Route::get('/track-transaction', [TransactionController::class, 'trackTransactionPage'])->name('track.transaction');
+Route::get('/tt', [TransactionController::class, 'trackTransactionPage'])->name('track.transaction');
 
 
 // Available posts:

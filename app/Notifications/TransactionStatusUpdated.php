@@ -54,7 +54,7 @@ class TransactionStatusUpdated extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->line($this->text)
-            ->action('Track transaction', url('/track-transaction?transaction=' . $this->transaction->id))
+            ->action('Track transaction', url('/tt?t=' . $this->transaction->id))
             ->line('Your FiftyFifty transaction serial number: ' . $this->transaction->id)
             ->line('Thank you for using 50-50!');
     }
@@ -72,7 +72,7 @@ class TransactionStatusUpdated extends Notification implements ShouldQueue
         return TelegramMessage::create()
             ->to(config('services.telegram-bot-api.chat_id'))
             ->content($pre . $this->text . ', Your FiftyFifty transaction serial number: ' . $this->transaction->id)
-            ->button('Track Transaction', url('/track-transaction?transaction=' . $this->transaction->id));
+            ->button('Track Transaction', url('/tt?t=' . $this->transaction->id));
     }
 
     /**

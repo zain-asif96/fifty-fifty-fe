@@ -29,7 +29,7 @@ const notification = useNotificationStore()
 const transactionId = ref('');
 
 const findTransaction = () => {
-    router.get('/track-transaction?transaction=' + transactionId.value)
+    router.get('/tt?t=' + transactionId.value)
 }
 
 // current transaction
@@ -46,7 +46,7 @@ onMounted(() => {
     Echo.channel('transaction-channel-' + props.transaction?.id)
         .listen('TransactionUpdated', (e) => {
             notification.notify('Transaction has been updated.', 'success')
-            router.get('/track-transaction?transaction=' + e.transactionId)
+            router.get('/tt?t=' + e.transactionId)
         });
 })
 

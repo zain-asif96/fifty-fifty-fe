@@ -11,7 +11,7 @@ const navItems = [
     {
         title: "track",
         label: "Track Transaction",
-        url: "/track-transaction",
+        url: "/tt",
     },
     {
         title: "Download App IOS/Android App",
