@@ -261,7 +261,7 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                                 {{ transaction.payment_status?.replaceAll('_', ' ') }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ transaction.transaction_id }}
+                                {{ transaction?.transaction_id||'-' }}
                             </td>
                             
 
