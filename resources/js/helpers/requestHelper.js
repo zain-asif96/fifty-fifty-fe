@@ -1,8 +1,8 @@
 import axios from "axios";
 import { userUserStore } from "@/stores/user";
-export const BASE_URL = "https://fifty-backend-production.up.railway.app";
+export const BASE_URL = "https://appiosandbackend-production.up.railway.app";
 export const request = async ({
-    BASE_URL = "https://fifty-backend-production.up.railway.app/",
+    BASE_URL = "https://appiosandbackend-production.up.railway.app/",
     type = "get",
     payload = {},
     url = "",
