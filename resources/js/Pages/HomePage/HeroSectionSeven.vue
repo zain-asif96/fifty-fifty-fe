@@ -31,7 +31,7 @@ const props = defineProps({
             </FiftyText>
             <div class="app-links-wrapper">
                 <img
-                    src="images/appQR.svg"
+                    src="images/appQR.png"
                     style="height: 130px; width: 130px"
                 />
                 <div class="apps-icons">
