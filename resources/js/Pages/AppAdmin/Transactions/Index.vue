@@ -205,6 +205,10 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                                     ')'
                                     : '' }}</span>
                             </th>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
+                                @click="sort('payment_status')">
+                                Transaction ID
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -256,6 +260,10 @@ const getAllTransactions = async (page = '1', limit = '10') => {
                             <td class="px-6 py-4 capitalize">
                                 {{ transaction.payment_status?.replaceAll('_', ' ') }}
                             </td>
+                            <td class="px-6 py-4">
+                                {{ transaction.transaction_id }}
+                            </td>
+                            
 
                         </tr>
                     </tbody>
