@@ -40,6 +40,7 @@ onMounted(() => {
     searchValue.value = new URLSearchParams(window.location.search).get('q');
     let cpg = new URLSearchParams(window.location.search).get('page');
     currentPage.value = cpg!=null?cpg:1
+
 });
 </script>
 
@@ -110,10 +111,10 @@ onMounted(() => {
                                 type <span class="fw-100">{{ store.column == 'type' ? '(' + store.type + ')' : '' }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
-                                @click="sort('payment_status')">
-                                Payment Status <span class="fw-100">{{ store.column == 'payment_status' ? '(' + store.type + ')'
-                                    : '' }}</span>
+                                >
+                               Transaction ID
                             </th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -154,6 +155,9 @@ onMounted(() => {
                             </td>
                             <td class="px-6 py-4 capitalize">
                                 {{ transaction.payment_status.replaceAll('_', ' ') }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ transaction?.transaction_id||'-' }}
                             </td>
 
                         </tr>
