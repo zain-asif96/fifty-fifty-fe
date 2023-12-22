@@ -111,6 +111,11 @@ onMounted(() => {
                                 type <span class="fw-100">{{ store.column == 'type' ? '(' + store.type + ')' : '' }}</span>
                             </th>
                             <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
+                                @click="sort('payment_status')">
+                                Payment Status <span class="fw-100">{{ store.column == 'payment_status' ? '(' + store.type + ')'
+                                    : '' }}</span>
+                            </th>
+                            <th class="px-6 py-3" :class="disableClick ? 'disabled' : 'clickable'" scope="col"
                                 >
                                Transaction ID
                             </th>
@@ -157,7 +162,7 @@ onMounted(() => {
                                 {{ transaction.payment_status.replaceAll('_', ' ') }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ transaction?.transaction_id||'-' }}
+                                {{ transaction?.user?.transaction_id||'-' }}
                             </td>
 
                         </tr>
