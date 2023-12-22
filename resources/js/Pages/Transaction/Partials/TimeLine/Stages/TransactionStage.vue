@@ -2,16 +2,8 @@
 import FiftyText from "@/Components/Design/FiftyText.vue";
 
 const props = defineProps({
-    date: {
-        type: String,
-        required: true
-    },
-    title: {
-        type: String,
-        required: true
-    },
-    text: {
-        type: String,
+    transaction: {
+        type: Object,
         required: true
     },
     isHidden: {
@@ -29,17 +21,16 @@ const props = defineProps({
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ date }}
+            {{ new Date(Number(transaction.payment_confirmed_time)).toISOString() }}
+            
         </FiftyText>
 
-        <FiftyText variation="body-xl" color="dark">
-            {{ title }}
+        <FiftyText class="transaction-heading" variation="body-xl" color="dark">
+            {{ transaction.payment_confirmed_title }}
         </FiftyText>
 
         <FiftyText>
-            {{ text }}
-
-            <slot/>
+            {{ transaction.payment_confirmed_message }}
         </FiftyText>
     </li>
 </template>

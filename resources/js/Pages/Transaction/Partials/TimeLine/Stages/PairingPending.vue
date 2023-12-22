@@ -24,15 +24,16 @@ const helpers = useHelpers()
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ transaction.created_at }}
+            {{ new Date(Number(transaction.pairing_pending_time)).toISOString() }}
+            
         </FiftyText>
 
-        <FiftyText variation="body-xl" color="dark">
-            Pairing is pending
+        <FiftyText class="transaction-heading" variation="body-xl" color="dark">
+            {{ transaction.pairing_pending_title }}
         </FiftyText>
 
         <FiftyText>
-            <slot/>
+            {{ transaction.pairing_pending_message }}
         </FiftyText>
     </li>
 </template>

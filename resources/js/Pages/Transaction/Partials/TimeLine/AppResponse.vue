@@ -14,6 +14,7 @@ import PaymentToOppositeReceiverConfirmed
     from "@/Pages/Transaction/Partials/TimeLine/Stages/PaymentToOppositeReceiverConfirmed.vue";
 import TransactionCompleted from "@/Pages/Transaction/Partials/TimeLine/Stages/TransactionCompleted.vue";
 import TransactionStage from "@/Pages/Transaction/Partials/TimeLine/Stages/TransactionStage.vue";
+import { timestamp } from "@vueuse/core";
 
 const props = defineProps({
     transaction: {
@@ -40,8 +41,9 @@ const receiverCountry = props.transaction?.receiver_country + `(${helpers.getCod
 const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.receiver_amount) + ` (${props.transaction?.receiver_currency})`
 
 
-console.log(props.transaction,"app response")
+console.log(props.transaction.transaction_config,"app response")
 
+const detail = props.transaction.transaction_config
 
 </script>
 
@@ -55,79 +57,65 @@ console.log(props.transaction,"app response")
      <div class="transaction-stages-wrapper">
         <ol class="relative border-l border-grey-200">
             <!-- 1- Transaction initialized -->
-            <initialized :transaction="transaction">
-                A hold of {{ (transaction?.sender_amount) }}
-                <span class="uppercase">
-                    ({{ transaction?.sender_currency }})
-                </span>
-                has been placed on your card and will be refunded once the transaction is complete.
-            </initialized>
+            <initialized v-if="detail.initialize" :transaction="detail" />
+           
 
             <!-- 2- Transaction Pairing pending -->
-            <PairingPending :transaction="transaction">
-                Money order for <b>{{ receiverName }}</b> has been posted in
-                <b>{{ receiverCountry }}.</b>
-
-            </PairingPending>
+            <PairingPending v-if="detail.pairing_pending" :transaction="detail" />
+            
 
             <!-- 3- Transaction Pairing complete -->
-            <PairingComplete
+            <PairingComplete 
+                v-if="detail.pairing_complete"
                 :is-hidden="transactionStatuses[transaction?.status] < 3"
-                :transaction="transaction"
-            >
+                :transaction="detail"
+            />
 
-                <b>{{ receiverName }}</b> 
-                in
-                <b>{{ receiverCountry }} </b>
-                has accepted your Money Order and now paying
-                <b> {{ amountInReceiverCurrency }} </b>
-                to
-                <b>{{ receiverName }}</b>
+               
 
-            </PairingComplete>
+            
 
             <!-- 4- PAYMENT_TO_RECEIVER_PENDING -->
 
             <!-- 5- Transaction Payment to receiver complete -->
             <PaymentToReceiverCompleted
+                v-if="detail.payment_complete"
                 :is-hidden="transactionStatuses[transaction?.status] < 5"
-                :transaction="transaction"
+                :transaction="detail"
                 @transactionUpdated="transactionUpdated"
-            >
+            />
 
-                <b>{{ receiverName }}</b> has been paid <b> {{ amountInReceiverCurrency }} </b>.
+                
 
-                Please confirm with <b>{{ receiverName }}</b> and view receipt.
-
-            </PaymentToReceiverCompleted>
+           
 
             <!-- 6- Transaction Payment to receiver confirmed -->
 
             <TransactionStage
-                :date="transaction?.payment_to_receiver_confirmed_at"
+                 v-if="detail.payment_confirmed"
+                :transaction="detail"
                 :is-hidden="transactionStatuses[transaction?.status] < 6"
-                text=""
-                title="Payment Confirmed"
-            >
-                <b> {{ receiverName }}</b> has received <b>{{ amountInReceiverCurrency }}.</b>
-            </TransactionStage>
+            />
 
             <!-- 7- OPPOSITE_PAYMENT_TO_RECEIVER_PENDING (we ask for payment) -->
-            <PaymentToOppositeReceiverPending :is-hidden="transactionStatuses[transaction?.status] < 6"
-                                              :transaction="transaction"/>
+            <!-- <PaymentToOppositeReceiverPending :is-hidden="transactionStatuses[transaction?.status] < 6"
+                                              :transaction="transaction"/> -->
 
             <!-- 8- OPPOSITE_PAYMENT_TO_RECEIVER_COMPLETE -->
 
             <!-- 9- OPPOSITE_PAYMENT_TO_RECEIVER_CONFIRMED -->
-            <PaymentToOppositeReceiverConfirmed :is-hidden="transactionStatuses[transaction?.status] < 9"
-                                                :transaction="transaction"
+            <PaymentToOppositeReceiverConfirmed
+            v-if="detail.send_payment"
+            :is-hidden="transactionStatuses[transaction?.status] < 9"
+            :transaction="detail"
             />
 
 
             <!-- 10- TRANSACTION_COMPLETED -->
             <TransactionCompleted
+                v-if="detail.thank_you"
                 :is-hidden="transactionStatuses[transaction?.status] < 10"
-                :transaction="transaction"
+                :transaction="detail"
             />
 
         </ol>

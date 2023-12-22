@@ -19,12 +19,14 @@ const props = defineProps({
     <li :class="{'opacity-30': isHidden}" class="mb-10 ml-4">
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
-        <FiftyText class="mb-2">
-            {{ transaction.transaction_completed_at }}
+       
+
+        <FiftyText class="transaction-heading" variation="body-xl" color="dark">
+            {{ transaction.thank_you_title }}
         </FiftyText>
 
         <FiftyText variation="body-xl" color="dark">
-            Thank for using 50-50!
+            {{ transaction.thank_you_message }}
         </FiftyText>
     </li>
 </template>

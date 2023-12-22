@@ -22,15 +22,16 @@ const props = defineProps({
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ transaction.created_at }}
+            {{ new Date(Number(transaction.initialize_time)).toISOString() }}
+            
         </FiftyText>
 
-        <FiftyText variation="body-xl" color="dark">
-            Transaction successfully initialized
+        <FiftyText class="transaction-heading" variation="body-xl" color="dark">
+            {{ transaction.initialize_title }}
         </FiftyText>
 
         <FiftyText>
-            <slot/>
+            {{ transaction.initialize_message }}
         </FiftyText>
     </li>
 </template>
