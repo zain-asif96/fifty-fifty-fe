@@ -130,9 +130,9 @@ const confirmPaymentToReceiver = async () => {
 
             </Modal>
 
-            <div class="confirmed-button" v-if="transactionStatuses[transaction.status] > 5">
+            <div class="confirmed-button" v-if="transaction.payment_confirmed">
                 <SuccessIcon class="icon"/>
-                Payment Confirmed
+                Payment to Receiver Confirmed
             </div>
 
             <NewActionButton

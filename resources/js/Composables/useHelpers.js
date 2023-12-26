@@ -1,5 +1,6 @@
 import { countries } from "@/helpers/countries";
 import { request } from "@/helpers/requestHelper.js";
+import moment from "moment";
 
 export const useHelpers = () => {
     const getURLParam = (param) => {
@@ -55,17 +56,9 @@ export const useHelpers = () => {
         return (amount / 100).toFixed(2);
     };
 
-    const options = {
-        weekday: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-    };
-
     const getDateFormat = (date) => {
-        const dateFormat = new Intl.DateTimeFormat("en-US", options);
-        return dateFormat.format(date);
+      return  moment(date).format('dddd D, h:mm A'); 
+
     };
 
     return {

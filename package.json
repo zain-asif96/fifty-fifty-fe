@@ -24,6 +24,7 @@
     "dependencies": {
         "@vueuse/core": "^10.1.2",
         "flowbite": "^1.6.3",
+        "moment": "^2.30.0",
         "pinia": "^2.0.30",
         "vue-tel-input": "^6.0.5"
     }
