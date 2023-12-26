@@ -3,6 +3,9 @@ import PostItem from "@/Pages/Posts/partials/PostItem.vue";
 import FiftyText from "@/Components/Design/FiftyText.vue";
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
 import {usePage} from "@inertiajs/vue3";
+import Modal from "@/Components/Custom/Modal.vue";
+
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
     posts: {
@@ -13,6 +16,23 @@ const props = defineProps({
 });
 
 const geoLocationDetails = usePage().props.geoDetails;
+
+const isModalOpened = ref(false);
+
+const closeModal = () => {
+    isModalOpened.value = false;
+    localStorage.setItem('modalClosed','true')
+}
+
+const openModal = () => {
+    if ( localStorage.getItem('modalClosed') === "true") return;
+    isModalOpened.value = true;
+}
+
+
+onMounted(()=>{
+    openModal()
+})
 
 </script>
 
@@ -36,6 +56,19 @@ const geoLocationDetails = usePage().props.geoDetails;
                 :url="route('available.posts.page')" class="w-fit"
                 title="View All Posts"
             />
+        </div>
+        <div>
+            <Modal width="wide" :close="closeModal" :isOpen="isModalOpened" header="Introduction">
+             
+
+                <template #content>
+                    <div class="p-6">
+                     <video class="w-full" src="images/intro.mp4" controls></video>
+                    </div>
+
+                </template>
+
+            </Modal>
         </div>
     </div>
 </template>
