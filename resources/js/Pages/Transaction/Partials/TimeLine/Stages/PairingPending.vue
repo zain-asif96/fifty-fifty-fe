@@ -24,7 +24,8 @@ const helpers = useHelpers()
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ new Date(Number(transaction.pairing_pending_time)).toISOString() }}
+            {{ helpers.getDateFormat(Number(transaction.pairing_pending_time)) }}
+
             
         </FiftyText>
 

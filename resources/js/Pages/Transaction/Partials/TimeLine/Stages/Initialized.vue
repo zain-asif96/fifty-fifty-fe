@@ -1,6 +1,7 @@
 <script setup>
 
 import FiftyText from "@/Components/Design/FiftyText.vue";
+import { useHelpers } from "@/Composables/useHelpers";
 
 const props = defineProps({
     transaction: {
@@ -14,6 +15,9 @@ const props = defineProps({
     }
 })
 
+const helpers = useHelpers()
+
+
 </script>
 
 
@@ -22,7 +26,9 @@ const props = defineProps({
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ new Date(Number(transaction.initialize_time)).toISOString() }}
+            {{ helpers.getDateFormat(Number(transaction.payment_complete_time)) }}
+
+            
             
         </FiftyText>
 

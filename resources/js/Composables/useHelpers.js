@@ -55,11 +55,25 @@ export const useHelpers = () => {
         return (amount / 100).toFixed(2);
     };
 
+    const options = {
+        weekday: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+    };
+
+    const getDateFormat = (date) => {
+        const dateFormat = new Intl.DateTimeFormat("en-US", options);
+        return dateFormat.format(date);
+    };
+
     return {
         getURLParam,
         getCountryLabelByCode,
         amountHumanReadableWithCurrency,
         getAllCountriesAdmin,
         getCodeLabelByCountry,
+        getDateFormat,
     };
 };
