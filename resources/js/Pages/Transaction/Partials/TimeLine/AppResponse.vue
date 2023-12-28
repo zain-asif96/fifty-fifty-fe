@@ -42,9 +42,12 @@ const receiverCountry = props.transaction?.receiver_country + `(${helpers.getCod
 const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.transaction?.receiver_amount) + ` (${props.transaction?.receiver_currency})`
 
 
+console.log(props.transaction, "transaction")
 console.log(props.transaction.transaction_config, "app response")
 
 const detail = props.transaction.transaction_config
+const reciept_img = props.transaction.reciept
+const proof_img = detail.proof_url
 
 </script>
 
@@ -216,7 +219,7 @@ const detail = props.transaction.transaction_config
                         Please
                     </FiftyText>
                 </div>
-                <img class="w-1/2 mt-10" :src="`${transaction.reciept}`" />
+                <img class="w-1/2 mt-10" :src="`${proof_img ?? reciept_img}`" />
             </li>
 
         </ol>
