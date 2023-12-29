@@ -72,7 +72,7 @@ console.log(detail, "app response");
                 :transaction="detail" />
 
             <div v-if="props.transaction.payment2">
-                <img class="w-1/2 my-10" :src="`${proof_img}`" />
+                <img class="w-1/2 my-10 rounded-xl border border-solid-blue" :src="`${proof_img}`" />
             </div>
 
             <!-- 4- PAYMENT_TO_RECEIVER_PENDING -->
@@ -87,12 +87,19 @@ console.log(detail, "app response");
             <!-- <TransactionStage v-if="detail.payment_confirmed_second" :transaction="detail"
                 :is-hidden="transactionStatuses[transaction?.status] < 6" /> -->
 
-            <TransactionStage v-if="detail.payment_confirmed" :transaction="detail"
-                :is-hidden="transactionStatuses[transaction?.status] < 6" />
+            <div v-if="props.transaction.payment2 === true && detail.payment_confirmed === true">
+                <TransactionStage v-if="detail.payment_confirmed" :transaction="detail"
+                    :is-hidden="transactionStatuses[transaction?.status] < 6" />
+            </div>
 
             <PaymentToReceiverCompleted v-if="detail.payment_complete"
                 :is-hidden="transactionStatuses[transaction?.status] < 5" :transaction="detail"
                 @transactionUpdated="transactionUpdated" />
+
+            <div v-if="props.transaction.payment2 === false && detail.payment_confirmed === true">
+                <TransactionStage v-if="detail.payment_confirmed" :transaction="detail"
+                    :is-hidden="transactionStatuses[transaction?.status] < 6" />
+            </div>
 
             <li v-if="detail.payment_confirmed_second" :class="{ 'opacity-30': isHidden }">
                 <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
@@ -220,7 +227,7 @@ console.log(detail, "app response");
                         </FiftyText>
                     </div>
                     <div v-if="props.transaction.payment2 === false">
-                        <img class="w-1/2 mt-10" :src="`${proof_img}`" />
+                        <img class="w-1/2 mt-10 rounded-xl border border-solid-blue" :src="`${proof_img}`" />
                     </div>
                 </li>
             </div>

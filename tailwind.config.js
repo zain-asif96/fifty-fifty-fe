@@ -19,7 +19,8 @@ module.exports = {
             colors: {
                 'custom-dark-blue':'#000330',
                 'custom-greyish': "#616274",
-                'greyish-100': "#6B7280"
+                'greyish-100': "#6B7280",
+                'solid-blue': "#233375",
               }
         },
     },

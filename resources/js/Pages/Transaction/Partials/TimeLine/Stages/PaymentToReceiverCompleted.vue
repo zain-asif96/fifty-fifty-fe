@@ -121,7 +121,7 @@ const confirmPaymentToReceiver = async () => {
                         </div>
                         <div v-else>
                             <img :src="`${transaction.proof_url}`"
-                                 alt="proof of payment">
+                                 alt="proof of payment" class="rounded-xl border border-solid-blue">
                         </div>
 
                     </div>
