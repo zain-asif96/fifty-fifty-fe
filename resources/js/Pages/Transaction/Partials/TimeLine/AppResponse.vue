@@ -44,7 +44,8 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
 
 console.log(props.transaction, "transaction")
 
-const detail = props.transaction.transaction_config
+const outerDetail = props.transaction;
+const detail = outerDetail.transaction_config;
 const proof_img = detail.proof_url
 
 console.log(detail, "app response");
@@ -71,7 +72,7 @@ console.log(detail, "app response");
             <PairingComplete v-if="detail.pairing_complete" :is-hidden="transactionStatuses[transaction?.status] < 3"
                 :transaction="detail" />
 
-            <div v-if="props.transaction.payment2">
+            <div v-if="outerDetail.payment2">
                 <img class="w-1/2 my-10 rounded-xl border border-solid-blue" :src="`${proof_img}`" />
             </div>
 
@@ -87,16 +88,16 @@ console.log(detail, "app response");
             <!-- <TransactionStage v-if="detail.payment_confirmed_second" :transaction="detail"
                 :is-hidden="transactionStatuses[transaction?.status] < 6" /> -->
 
-            <div v-if="props.transaction.payment2 === true && detail.payment_confirmed === true">
+            <div v-if="outerDetail.payment2 === true && detail.payment_confirmed === true">
                 <TransactionStage v-if="detail.payment_confirmed" :transaction="detail"
                     :is-hidden="transactionStatuses[transaction?.status] < 6" />
             </div>
 
             <PaymentToReceiverCompleted v-if="detail.payment_complete"
-                :is-hidden="transactionStatuses[transaction?.status] < 5" :transaction="detail"
+                :is-hidden="transactionStatuses[transaction?.status] < 5" :transaction="outerDetail"
                 @transactionUpdated="transactionUpdated" />
 
-            <div v-if="props.transaction.payment2 === false && detail.payment_confirmed === true">
+            <div v-if="outerDetail.payment2 === false && detail.payment_confirmed === true">
                 <TransactionStage v-if="detail.payment_confirmed" :transaction="detail"
                     :is-hidden="transactionStatuses[transaction?.status] < 6" />
             </div>
@@ -156,7 +157,7 @@ console.log(detail, "app response");
                             First name:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_firstname }}
+                            {{ outerDetail.receiver_firstname }}
                         </FiftyText>
                     </div>
                     <div class="mt-1.5 flex gap-2">
@@ -164,7 +165,7 @@ console.log(detail, "app response");
                             Last name:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_lastname }}
+                            {{ outerDetail.receiver_lastname }}
 
                         </FiftyText>
                     </div>
@@ -173,7 +174,7 @@ console.log(detail, "app response");
                             Email:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_email }}
+                            {{ outerDetail.receiver_email }}
                         </FiftyText>
                     </div>
                     <div class="mt-1.5 flex gap-2">
@@ -181,7 +182,7 @@ console.log(detail, "app response");
                             Phone:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_phone }}
+                            {{ outerDetail.receiver_phone }}
                         </FiftyText>
                     </div>
 
@@ -190,7 +191,7 @@ console.log(detail, "app response");
                             Country:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_country }}
+                            {{ outerDetail.receiver_country }}
                         </FiftyText>
                     </div>
 
@@ -199,7 +200,7 @@ console.log(detail, "app response");
                             Bank:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_bank_name }}
+                            {{ outerDetail.receiver_bank_name }}
                         </FiftyText>
                     </div>
                     <div class="mt-1.5 flex gap-2">
@@ -207,7 +208,7 @@ console.log(detail, "app response");
                             Branch Name:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_branch_name }}
+                            {{ outerDetail.receiver_branch_name }}
                         </FiftyText>
                     </div>
                     <div class="mt-1.5 flex gap-2">
@@ -215,7 +216,7 @@ console.log(detail, "app response");
                             Account Number:
                         </FiftyText>
                         <FiftyText class="font-semibold">
-                            {{ props.transaction.receiver_bank_account_number }}
+                            {{ outerDetail.receiver_bank_account_number }}
                         </FiftyText>
                     </div>
                     <div class="mt-1.5 flex gap-2">
@@ -226,7 +227,7 @@ console.log(detail, "app response");
                             Please
                         </FiftyText>
                     </div>
-                    <div v-if="props.transaction.payment2 === false">
+                    <div v-if="outerDetail.payment2 === false">
                         <img class="w-1/2 mt-10 rounded-xl border border-solid-blue" :src="`${proof_img}`" />
                     </div>
                 </li>

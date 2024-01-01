@@ -42,6 +42,8 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
 
 console.log(props.transaction,"web response")
 
+const outerDetail = props.transaction;
+
 
 </script>
 
@@ -84,7 +86,7 @@ console.log(props.transaction,"web response")
             <!-- 5- Transaction Payment to receiver complete -->
             <PaymentToReceiverCompleted
                 :is-hidden="transactionStatuses[transaction?.status] < 5"
-                :transaction="transaction"
+                :transaction="outerDetail"
                 @transactionUpdated="transactionUpdated"
             >
 
