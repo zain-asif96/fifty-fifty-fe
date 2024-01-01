@@ -45,7 +45,7 @@ const amountInReceiverCurrency = helpers.amountHumanReadableWithCurrency(props.t
 console.log(props.transaction, "transaction")
 
 const outerDetail = props.transaction;
-const detail = outerDetail.transaction_config;
+const  detail = outerDetail.transaction_config;
 const proof_img = detail.proof_url
 
 console.log(detail, "app response");
