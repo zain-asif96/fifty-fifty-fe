@@ -13,6 +13,7 @@ import HeroSectionSeven from "@/Pages/HomePage/HeroSectionSeven.vue";
 import HeroSectionEight from "@/Pages/HomePage/HeroSectionEight.vue";
 import HeroSectionNine from "@/Pages/HomePage/HeroSectionNine.vue";
 import CurrencyExchangeBar from "@/Pages/HomePage/CurrencyExchangeBar.vue";
+import { redirectionStore } from "@/helpers/redirection";
 
 const props = defineProps({
     canLogin: Boolean,
@@ -40,10 +41,12 @@ const props = defineProps({
 // Geo Location:
 const geoLocationDetails = usePage().props.geoDetails;
 console.log({ cccc: props?.supportedCountries });
+
 </script>
 
 <template>
     <GuestLayout>
+
         <Head>
             <title>Fifty Fifty | Homepage</title>
         </Head>
@@ -75,7 +78,7 @@ console.log({ cccc: props?.supportedCountries });
 
             <HeroSectionEight />
 
-            <HeroSectionNine />
+            <HeroSectionNine :redirectHandler="redirectionStore" />
         </div>
     </GuestLayout>
 </template>

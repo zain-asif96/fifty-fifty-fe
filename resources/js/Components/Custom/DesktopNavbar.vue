@@ -6,6 +6,11 @@ const props = defineProps({
     navItems: {
         required: true,
     },
+    redirectHandler: {
+        type: Function,
+        default: () => { }
+
+    },
 });
 
 const geoLocationDetails = usePage().props.geoDetails;
@@ -39,7 +44,7 @@ const geoLocationDetails = usePage().props.geoDetails;
             <div class="action-buttons">
                 <NewActionButton
                     v-if="geoLocationDetails.userCanSend"
-                    :url="route('user.info.page')"
+                    @click="redirectHandler"
                     title="Start currency swap"
                     
                     />

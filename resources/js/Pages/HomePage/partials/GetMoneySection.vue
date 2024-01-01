@@ -1,6 +1,14 @@
 <script setup>
 import FiftyText from "@/Components/Design/FiftyText.vue";
 import NewActionButton from "@/Components/Design/NewActionButton.vue";
+
+const props = defineProps({
+    redirectHandler: {
+        type: Function,
+        default: () => { }
+
+    },
+});
 </script>
 
 <template>
@@ -22,7 +30,7 @@ import NewActionButton from "@/Components/Design/NewActionButton.vue";
                         transparently, conveniently, and eventually for free.
                     </FiftyText>
 
-                    <NewActionButton :url="route('user.info.page')" class="w-fit money-action-button"
+                    <NewActionButton @click="redirectHandler" class="w-fit money-action-button"
                         title="Start currency swap" />
                 </div>
             </div>

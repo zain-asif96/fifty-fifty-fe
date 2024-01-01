@@ -1,6 +1,7 @@
 <script setup>
 import DesktopNavbar from "@/Components/Custom/DesktopNavbar.vue";
 import MobileNavbar from "@/Components/Custom/MobileNavbar.vue";
+import { redirectionStore } from "@/helpers/redirection";
 
 const navItems = [
     {
@@ -34,14 +35,15 @@ const navItems = [
     //     url: "/#faq",
     // },
 ];
+
 </script>
 
 <template>
     <div>
         <!-- Desktop nav bar -->
-        <DesktopNavbar :navItems="navItems" />
+        <DesktopNavbar :navItems="navItems" :redirectHandler="redirectionStore" />
 
-        <MobileNavbar :navItems="navItems" />
+        <MobileNavbar :navItems="navItems" :redirectHandler="redirectionStore" />
     </div>
 </template>
 

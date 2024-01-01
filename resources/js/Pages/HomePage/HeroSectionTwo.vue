@@ -1,6 +1,8 @@
 <script setup>
 import FiftyText from "@/Components/Design/FiftyText.vue";
 import GetMoneySection from "@/Pages/HomePage/partials/GetMoneySection.vue";
+import { redirectionStore } from "@/helpers/redirection";
+
 </script>
 
 <template>
@@ -17,7 +19,7 @@ import GetMoneySection from "@/Pages/HomePage/partials/GetMoneySection.vue";
             </FiftyText>
         </div>
 
-        <GetMoneySection />
+        <GetMoneySection :redirectHandler="redirectionStore" />
     </div>
 </template>
 
