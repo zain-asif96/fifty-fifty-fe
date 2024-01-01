@@ -60,7 +60,7 @@ const confirmPaymentToReceiver = async () => {
     try {
 
         const res = await axios.post('/api/confirm-payment-to-receiver', {
-            transactionId: props.transaction.id
+            transactionId: props.transaction.transaction_config.id
         });
 
         console.log(res);
@@ -88,16 +88,16 @@ const confirmPaymentToReceiver = async () => {
         <div class="track-step-icon w-3 h-3 mt-1.5 -left-1.5 border border-white"></div>
 
         <FiftyText class="mb-2">
-            {{ helpers.getDateFormat(Number(transaction.payment_complete_time)) }}
+            {{ helpers.getDateFormat(Number(transaction.transaction_config.payment_complete_time)) }}
             
         </FiftyText>
 
         <FiftyText class="transaction-heading" variation="body-xl" color="dark">
-            {{ transaction.payment_complete_title }}
+            {{ transaction.transaction_config.payment_complete_title }}
         </FiftyText>
 
         <FiftyText>
-            {{ transaction.payment_complete_message }}
+            {{ transaction.transaction_config.payment_complete_message }}
         </FiftyText>
 
         <div class="receiver-action-buttons">
@@ -115,12 +115,13 @@ const confirmPaymentToReceiver = async () => {
                         <!--                        <img :src="`${transaction.opposite_transaction?.payment_intent.payment_proof}`"-->
                         <!--                             alt="proof of payment">-->
 
-                        <div v-if="checkExt(`${transaction.proof_url}`)">
-                            <a @click="downloadPDF(`${transaction.proof_url}`)"
+                        <div v-if="checkExt(`${transaction.transaction_config.proof_url}`)">
+                            <a @click="downloadPDF(`${transaction.transaction_config.proof_url}`)"
                                href="#">Download PDF</a>
                         </div>
                         <div v-else>
-                            <img :src="`${transaction.proof_url}`"
+                            <!-- <img :src="`${transaction.proof_url}`" -->
+                            <img :src="`${transaction.reciept}`"
                                  alt="proof of payment" class="rounded-xl border border-solid-blue">
                         </div>
 
@@ -130,7 +131,7 @@ const confirmPaymentToReceiver = async () => {
 
             </Modal>
 
-            <div class="confirmed-button" v-if="transaction.payment_confirmed">
+            <div class="confirmed-button" v-if="transaction.transaction_config.payment_confirmed">
                 <SuccessIcon class="icon"/>
                 Payment to Receiver Confirmed
             </div>
