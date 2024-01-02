@@ -40,7 +40,7 @@ const props = defineProps({
 
 // Geo Location:
 const geoLocationDetails = usePage().props.geoDetails;
-// console.log({ cccc: props?.supportedCountries });
+console.log({ cccc: props?.supportedCountries });
 
 </script>
 
